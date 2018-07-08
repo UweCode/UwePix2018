@@ -63,7 +63,7 @@ a { transition: background-color 300ms, color 300ms }
 	align-items: flex-start;
 	font-size: 12px;
 	margin: 6px 0 0 10px;
-	min-width: 230px;
+	min-width: 246px;
 }
 .divider {
 	padding: 0 6px;
@@ -104,6 +104,7 @@ a { transition: background-color 300ms, color 300ms }
 }
 .liMenu {
 	display: inline;
+	font-size: .9rem;
 }
 .liMenuSel, .liNavMenuSel {
 	display: inline;

@@ -88,7 +88,19 @@ $(document).ready(function() {
           margin: 10,
           nav: true,
   	  		stopOnHover : true,
-  		    lazyLoad : true
+  		    lazyLoad : true,
+          slideBy: 'page',
+          responsive:{
+              0:{
+                  items:1
+              },
+              750:{
+                  items:2
+              },
+              2000:{
+                  items:3
+              }
+          }
       })
 		};
 
@@ -110,7 +122,7 @@ $(document).ready(function() {
 		 $('#divGallery').slideUp(300).empty();
 		 // reset all links and menu items
 		 $('.liMenu').removeClass('liMenuSel');
-		 $('.mainMenu').removeClass('menuSel');
+		 $('.dropbtn').removeClass('menuSel');
 		 // set new page
 		 $.currentPage = selectedPage;
 
@@ -119,18 +131,20 @@ $(document).ready(function() {
 
    // if a new page is selected, load that page, create html for all sections
    _Indx.fnBuildPage = (galleryName) => {
- 			if (_Indx.fnResetPage(galleryName)) {
-        if(galleryName == 'Home') {
-          $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
-     			setTimeout( () => {
-     				_Indx.fnInitNavCarousel();
-     				_Indx.fnRegisterNavCarouselEvents();
-     				$('#divNavGallery').children().slideDown(300);
-     			},20 )
-        } else {
-          $('#divGallery').prepend(_Indx.fnGetCarousel(galleryName));
-        };
-      }
+      if(galleryName == 'Home') {
+        $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
+   			setTimeout( () => {
+   				_Indx.fnInitNavCarousel();
+   				_Indx.fnRegisterNavCarouselEvents();
+   				$('#divNavGallery').children().slideDown(300);
+   			},20 )
+      } else {
+        $('#divGallery').prepend(_Indx.fnGetCarousel(galleryName));
+  			setTimeout( () => {
+  				_Indx.fnInitGalleryCarousel();
+  				$('#divGallery').children().slideDown(300);
+  			},20 );
+      };
  		};
 
 	  // get the nav carousel for the home page ; add events
