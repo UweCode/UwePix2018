@@ -60,6 +60,8 @@ $(document).ready(function() {
           loop: true,
           margin: 10,
           nav: true,
+          navSpeed: 500,
+          dotsSpeed: 500,
           slideBy: 'page',
           responsive:{
               0:{
@@ -87,6 +89,8 @@ $(document).ready(function() {
           loop: true,
           margin: 10,
           nav: true,
+          navSpeed: 800,
+          dotsSpeed: 800,
   	  		stopOnHover : true,
   		    lazyLoad : true,
           slideBy: 'page',
