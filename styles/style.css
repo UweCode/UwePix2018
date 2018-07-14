@@ -87,8 +87,6 @@ a { transition: background-color 300ms, color 300ms }
 
 /* Navigation */
 
-/* Navigation */
-
 #mobileNav {
 	display: none;
 }
@@ -254,6 +252,32 @@ section {
 
 #divNavCarousel img.hoverPointer:hover  {
 	cursor: pointer;
+}
+
+.owl-prev {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: 35%;
+		left: -10px;
+    margin-left: -20px;
+    display: block!IMPORTANT;
+    border:0px solid black;
+}
+.owl-next {
+    width: 15px;
+    height: 100px;
+    position: absolute;
+    top: 35%;
+    right: -10px;
+    display: block!IMPORTANT;
+    border:0px solid black;
+}
+.owl-prev i, .owl-next i {transform : scale(1,6); color: #ccc;}
+.owl-prev:focus, .owl-next:focus {outline: none;}
+
+.owl-theme .owl-nav {
+	margin: 0;
 }
 
 /* Footer */

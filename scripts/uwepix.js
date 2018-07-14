@@ -60,12 +60,15 @@ $(document).ready(function() {
           loop: true,
           margin: 10,
           nav: true,
+          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+          navSpeed: 500,
+          dotsSpeed: 500,
           slideBy: 'page',
           responsive:{
               0:{
                   items:1
               },
-              600:{
+              500:{
                   items:2
               },
               1200:{
@@ -87,6 +90,9 @@ $(document).ready(function() {
           loop: true,
           margin: 10,
           nav: true,
+          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+          navSpeed: 800,
+          dotsSpeed: 800,
   	  		stopOnHover : true,
   		    lazyLoad : true,
           slideBy: 'page',
