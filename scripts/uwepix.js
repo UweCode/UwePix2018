@@ -46,10 +46,15 @@ $(document).ready(function() {
 
   	// register image-click events (Home Page: for opening a particular gallery)
     _Indx.fnRegisterNavCarouselEvents = () => {
-    	$('#carousel .item img.imgLink').unbind('click');
+    	$('img.imgLink').unbind('click');
 
-    	$('#carousel .item img.imgLink').click( function (e) {
+    	$('img.imgLink').click( function (e) {
+  			let selectedPage = e.currentTarget.id;
 
+        if (_Indx.fnResetPage(selectedPage)) {
+					setTimeout( function () { $('#divGallery').slideDown(300); },300 );
+          setTimeout( function () { _Indx.fnBuildPage(selectedPage); },600 );
+				}
 			});
 		};
 

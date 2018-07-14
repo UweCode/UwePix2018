@@ -250,6 +250,10 @@ section {
 
 /* Content | Galleries */
 
+#divGallery {
+	margin: 10px 25px;
+}
+
 #divNavCarousel img.hoverPointer:hover  {
 	cursor: pointer;
 }
@@ -259,7 +263,7 @@ section {
     height: 100px;
     position: absolute;
     top: 35%;
-		left: -10px;
+		left: -30px;
     margin-left: -20px;
     display: block!IMPORTANT;
     border:0px solid black;
@@ -269,9 +273,15 @@ section {
     height: 100px;
     position: absolute;
     top: 35%;
-    right: -10px;
+    right: -30px;
     display: block!IMPORTANT;
     border:0px solid black;
+}
+#navCarousel .owl-prev {
+	left: -10px;
+}
+#navCarousel .owl-next {
+	right: -10px;
 }
 .owl-prev i, .owl-next i {transform : scale(1,6); color: #ccc;}
 .owl-prev:focus, .owl-next:focus {outline: none;}
