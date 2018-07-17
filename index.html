@@ -8,6 +8,7 @@
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Source+Sans+Pro:300,400&amp;subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="styles/reset.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="styles/style.css" media="screen"/>
@@ -33,13 +34,17 @@
 			<div id="headerTitleBlue" class="headerText"> PHOTOGRAPHY </div>
 		</div>
 		<div id="headerMenu">
-			<ul class="ulMenu">
+			<ul id="ulMenu">
 				<li id="cmdHome" class="home menu liMenu liMenuSel"><a href="#home"> HOME </a></li>
 				<li class="liMenu divider"> | </li>
 				<li id="txtInfoAndContact" class="infoAndContact menu liMenu"><a href="#infoandcontact"> INFO & CONTACT </a></li>
 				<li class="liMenu divider"> | </li>
 				<li class="liMenu"><a href="http://www.uweschneider.zenfolio.com" target="_blank"> CLIENT SITE </a></li>
 			</ul>
+		</div>
+		<div id="mobileHeaderMenu">
+			<i id="menuIcon" class="material-icons md-24">menu</i>
+			<i id="menuIconUp" class="material-icons md-24 menuUpIcon hidden">keyboard_arrow_up</i>
 		</div>
 	</header>
 
@@ -100,7 +105,36 @@
 	<!-- mobile navigation -->
 
 	<nav id="mobileNav" class="nav">
-
+		<ul id="ulMobileTopMenu ulMobileMenu">
+			<li id="cmdHomeMobile" class="home mobileMenu liMobileTopMenu liMobileTopMenuSel"><a href="#home"> HOME </a></li>
+			<li id="txtInfoAndContactMobile" class="infoAndContact mobileMenu liMobileTopMenu"><a href="#infoandcontact"> INFO & CONTACT </a></li>
+			<li class="liMobileTopMenu"><a href="http://www.uweschneider.zenfolio.com" target="_blank"> CLIENT SITE </a></li>
+		</ul>
+		<h4>Portfolios</h4>
+		<ul id="ulMobileMenuPortfolios" class="ulMobileMenu">
+			<li id="cmdMobileNightlight" class="mobileMenu">Nightlight</li>
+			<li id="cmdMobileWinterInPdx" class="mobileMenu">Snow Storm In NE Portland</li>
+			<li id="cmdMobileWallsPoles" class="mobileMenu">Abstracts On Walls And Utility Poles</li>
+		</ul>
+		<h4>People</h4>
+		<ul id="ulMobileMenuPeople" class="ulMobileMenu">
+			<li id="cmdMobileEarlyPortraits" class="mobileMenu">Portraits I</li>
+			<li id="cmdMobilePortraits" class="mobileMenu">Portraits II</li>
+			<li id="cmdMobileMovieDirectors" class="mobileMenu">Movie Directors</li>
+			<li id="cmdMobileCoffeePlant" class="mobileMenu">Coffee Plant</li>
+			<li id="cmdMobileOneWedding" class="mobileMenu">One Wedding</li>
+		</ul>
+		<h4>Architecture</h4>
+		<ul id="ulMobileMenuArchitecture" class="ulMobileMenu">
+			<li id="cmdMobileWiedenKennedy" class="mobileMenu">Wieden+Kennedy Building</li>
+		</ul>
+		<h4>Travel</h4>
+		<ul id="ulMobileMenuTravel" class="ulMobileMenu">
+			<li id="cmdMobilePaintedHills" class="mobileMenu">USA: Painted Hills</li>
+			<li id="cmdMobileBerlin" class="mobileMenu">Germany: Berlin</li>
+			<li id="cmdMobileBerlinWallArt" class="mobileMenu">Germany: Berlin Wall</li>
+		</ul>
+		<i class="material-icons md-24 menuUpIcon">keyboard_arrow_up</i>
 	</nav>
 
 	<!-- page content -->
@@ -150,7 +184,7 @@
 			<div id="divGallery">
 				<!-- galleries -->
 			</div>
-			
+
 		</div>
 	</section>
 

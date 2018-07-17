@@ -63,6 +63,15 @@ a { transition: background-color 300ms, color 300ms }
 	align-items: flex-start;
 	font-size: 12px;
 	margin: 6px 0 0 10px;
+	min-width: 290px;
+}
+#mobileHeaderMenu {
+	display: none;
+	flex-wrap: nowrap;
+	flex: 1;
+	justify-content: flex-start;
+	align-items: flex-start;
+	margin: 6px 0 0 10px;
 	min-width: 246px;
 }
 .divider {
@@ -87,16 +96,13 @@ a { transition: background-color 300ms, color 300ms }
 
 /* Navigation */
 
-#mobileNav {
-	display: none;
-}
 .navigation {
 	min-height: 30px;
 }
 #divNavMenu a {
 	font-size: 12px;
 }
-.ulMenu {
+#ulMenu {
 	display: flex;
 	flex-wrap: nowrap;
 }
@@ -114,7 +120,7 @@ li.liTop {
 	color: #FFFFFF;
 	cursor: default;
 	background-color: #7D7D7D;
-	padding: 2px 4px 1px 3px;
+	padding: 4px 4px 1px 3px;
 }
 .liNavMenuSel a {
 	color: #FFFFFF;
@@ -125,6 +131,43 @@ li.liTop {
 .menuSel {
   color: #FFFFFF !important;
   background-color: #7D7D7D !important;
+}
+
+#mobileNav {
+	display: none;
+}
+#menuIcon:hover, .menuUpIcon:hover {
+	cursor: pointer;
+}
+#ulMobileMenu {
+	display: flex;
+	flex-wrap: wrap;
+}
+h4 {
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 6px 10px 4px;
+}
+.liMobileTopMenu, .liMobileTopMenuSel {
+	display: inline-block;
+  font-size: .8rem;
+  padding: 20px 10px;
+}
+.liMobileMenu {
+	font-size: .9rem;
+
+}
+.ulMobileMenu li {
+	padding: 4px 20px 10px;
+	font-size: 13px;
+}
+.liMobileMenuSel {
+	color: #FFFFFF !important;
+  background-color: #7D7D7D !important;
+}
+.ulMobileMenu li:hover {
+	color: maroon;
+	cursor: pointer;
 }
 
 /* Drop-Down Menu - Main Styles */
@@ -313,32 +356,19 @@ footer div {
 /* media queries */
 
 @media screen and (max-width: 540px) {
-	#desktopNav {
+	#desktopNav, #headerMenu {
 		display: none;
 	}
-	#mobileNav {
+	#mobileHeaderMenu {
 		display: block;
 	}
-}
-
-@media screen and (max-height: 530px) {
-
-}
-
-@media screen and (min-height: 750px) {
-
+	#menuIconUp {
+		display: none;
+	}
 }
 
 @media screen and (min-height: 400px) {
 	footer {
 	  height: 30px;
 	}
-}
-
-@media screen and (max-height: 719px) {
-
-}
-
-@media screen and (min-height: 720px) and (min-width: 900px) {
-
 }
