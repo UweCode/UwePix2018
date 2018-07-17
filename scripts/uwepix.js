@@ -42,6 +42,44 @@ $(document).ready(function() {
   				}
         }
 			});
+
+			$('.mobileMenu').click( function (e) {
+				let menuId = e.currentTarget.id;
+
+				if (menuId.length > 9) {
+					let selectedPage = menuId.substring(9,e.currentTarget.id.length);
+
+					if (_Indx.fnResetPage(selectedPage)) {
+  					if (selectedPage === 'InfoAndContact') {
+				    	$('#txtInfoAndContact').addClass('liMenuSel');
+							setTimeout( function () { $('#divInfoAndContact').slideDown(300); },300 );
+  					} else if (selectedPage === 'Home') {
+				    	$('#cmdHome').addClass('liMenuSel');
+							setTimeout( function () {
+                $('#divNavGallery').children().slideDown(300);
+              },300 );
+  					} else {
+  						setTimeout( function () { $('#divGallery').slideDown(300); },300 );
+              setTimeout( function () { _Indx.fnBuildPage(selectedPage); },600 );
+              $('.menuUpIcon').trigger('click');
+  					}
+  				}
+        }
+			});
+
+      // show / hide the mobile menu
+      $('#menuIcon').click( function (e) {
+        $('#menuIcon').hide(300);
+        $('#menuIconUp').show(300);
+        setTimeout( function () { $('#mobileNav').slideDown(800); },300 );
+      });
+      $('.menuUpIcon').click( function (e) {
+        $('#mobileNav').slideUp(800);
+        setTimeout( function () {
+          $('#menuIconUp').hide(300);
+          $('#menuIcon').show(300);
+        },800 );
+      });
 		};
 
   	// register image-click events (Home Page: for opening a particular gallery)
