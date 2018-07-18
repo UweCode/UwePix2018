@@ -62,17 +62,13 @@ a { transition: background-color 300ms, color 300ms }
 	justify-content: flex-end;
 	align-items: flex-start;
 	font-size: 12px;
-	margin: 6px 0 0 10px;
+	margin: 0;
 	min-width: 290px;
 }
-#mobileHeaderMenu {
+#menuIcon {
 	display: none;
-	flex-wrap: nowrap;
-	flex: 1;
-	justify-content: flex-start;
-	align-items: flex-start;
-	margin: 6px 0 0 10px;
-	min-width: 246px;
+	margin: 0;
+	max-width: 40px;
 }
 .divider {
 	padding: 0 6px;
@@ -120,7 +116,7 @@ li.liTop {
 	color: #FFFFFF;
 	cursor: default;
 	background-color: #7D7D7D;
-	padding: 4px 4px 1px 3px;
+	padding: 3px 4px 2px 3px;
 }
 .liNavMenuSel a {
 	color: #FFFFFF;
@@ -359,7 +355,7 @@ footer div {
 	#desktopNav, #headerMenu {
 		display: none;
 	}
-	#mobileHeaderMenu {
+	#menuIcon {
 		display: block;
 	}
 	#menuIconUp {
