@@ -6,6 +6,7 @@ $(document).ready(function() {
 	// GLOBALS //
 
   $.currentPage = undefined;							// currently selected main section/gallery
+  $.showHome = true;
 
 	// START-UP //
 
@@ -28,10 +29,10 @@ $(document).ready(function() {
 
 					if (_Indx.fnResetPage(selectedPage)) {
   					if (selectedPage === 'InfoAndContact') {
-				    	$('#txtInfoAndContact').addClass('liMenuSel');
+				    	$('#cmdInfoAndContact, #cmdMobileInfoAndContact').addClass('liMenuSel');
 							setTimeout( function () { $('#divInfoAndContact').slideDown(300); },300 );
   					} else if (selectedPage === 'Home') {
-				    	$('#cmdHome').addClass('liMenuSel');
+				    	$('#cmdHome, #cmdMobileHome').addClass('liMenuSel');
 							setTimeout( function () {
                 $('#divNavGallery').children().slideDown(300);
               },300 );
@@ -51,17 +52,20 @@ $(document).ready(function() {
 
 					if (_Indx.fnResetPage(selectedPage)) {
   					if (selectedPage === 'InfoAndContact') {
-				    	$('#txtInfoAndContact').addClass('liMenuSel');
+				    	$('#cmdInfoAndContact, #cmdMobileInfoAndContact').addClass('liMenuSel');
 							setTimeout( function () { $('#divInfoAndContact').slideDown(300); },300 );
   					} else if (selectedPage === 'Home') {
-				    	$('#cmdHome').addClass('liMenuSel');
+				    	$('#cmdHome, #cmdMobileHome').addClass('liMenuSel');
 							setTimeout( function () {
                 $('#divNavGallery').children().slideDown(300);
               },300 );
   					} else {
+              if($('#mobileNav').is(':visible')) {
+                $.showHome = false;
+                $('.menuUpIcon').trigger('click');
+              }
   						setTimeout( function () { $('#divGallery').slideDown(300); },300 );
               setTimeout( function () { _Indx.fnBuildPage(selectedPage); },600 );
-              $('.menuUpIcon').trigger('click');
   					}
   				}
         }
@@ -71,13 +75,31 @@ $(document).ready(function() {
       $('#menuIcon').click( function (e) {
         $('#menuIcon').hide(300);
         $('#menuIconUp').show(300);
-        setTimeout( function () { $('#mobileNav').slideDown(800); },300 );
+        setTimeout( function () {
+          $.currentPage = "MobileNav";
+          $('#mobileNav').slideDown(800);
+
+          // hide or remove other page content
+           if ($('#divInfoAndContact').is(':visible')) {
+             $('#divInfoAndContact').slideUp(300);
+           }
+           if($('#divNavGallery').is(':visible')){
+             $('#divNavGallery').children().slideUp(300);
+           }
+      		 // remove currently selected carousel - if any
+      		 $('#divGallery').slideUp(300).empty();
+        },300 );
       });
       $('.menuUpIcon').click( function (e) {
+        if($.showHome) {
+          $('#cmdHome').trigger('click');
+        }
+
         $('#mobileNav').slideUp(800);
         setTimeout( function () {
           $('#menuIconUp').hide(300);
           $('#menuIcon').show(300);
+          $.showHome = true;
         },800 );
       });
 		};
@@ -153,7 +175,18 @@ $(document).ready(function() {
       })
 		};
 
+    setTimeout( () => {
+      $(window).on('resize', _.debounce(_Indx.fnVerifyMobileNav, 150));
+    },20 )
+
 	 // FUNCTIONS //
+
+   _Indx.fnVerifyMobileNav = () => {
+     if($('#mobileNav').is(':visible')) {
+       $.showHome = false;
+       $('.menuUpIcon').trigger('click');
+     }
+   }
 
 	 // prepare page to load new content
 	 _Indx.fnResetPage = (selectedPage) => {
@@ -167,10 +200,14 @@ $(document).ready(function() {
      if($('#divNavGallery').is(':visible')){
        $('#divNavGallery').children().slideUp(300);
      }
+     if($('#mobileNav').is(':visible')){
+       $.showHome = false;
+       $('.menuUpIcon').trigger('click');
+     }
 		 // remove currently selected carousel - if any
 		 $('#divGallery').slideUp(300).empty();
 		 // reset all links and menu items
-		 $('.liMenu').removeClass('liMenuSel');
+		 $('.liMenu, .liMobileTopMenu').removeClass('liMenuSel');
 		 $('.dropbtn').removeClass('menuSel');
 		 // set new page
 		 $.currentPage = selectedPage;
@@ -287,7 +324,7 @@ $(document).ready(function() {
 	        break;
 		    case 'Footer':
           if (_Indx.fnResetPage('Home')) {
-            $('#cmdHome').addClass('liMenuSel');
+            $('#cmdHome, #cmdMobileHome').addClass('liMenuSel');
             setTimeout( function () {
               $('#divNavGallery').children().slideDown(300);
             },300 );
