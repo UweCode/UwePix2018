@@ -13,6 +13,7 @@ $(document).ready(function() {
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
 		_Indx.fnBuildPage('Home');
+    $('#year').text(new Date().getFullYear());
 	},20 );
 
 	// EVENTS //
@@ -106,9 +107,9 @@ $(document).ready(function() {
 
   	// register image-click events (Home Page: for opening a particular gallery)
     _Indx.fnRegisterNavCarouselEvents = () => {
-    	$('img.imgLink').unbind('click');
+    	$('img.imgLink').unbind('dblclick');
 
-    	$('img.imgLink').click( function (e) {
+    	$('img.imgLink').dblclick( function (e) {
   			let selectedPage = e.currentTarget.id;
 
         if (_Indx.fnResetPage(selectedPage)) {
