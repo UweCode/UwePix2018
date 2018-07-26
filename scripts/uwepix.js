@@ -30,10 +30,10 @@ $(document).ready(function() {
 
 					if (_Indx.fnResetPage(selectedPage)) {
   					if (selectedPage === 'InfoAndContact') {
-				    	$('#cmdInfoAndContact, #cmdMobileInfoAndContact').addClass('liMenuSel');
+				    	$('#cmdInfoAndContact').addClass('liMenuSel');
 							setTimeout( function () { $('#divInfoAndContact').slideDown(300); },300 );
   					} else if (selectedPage === 'Home') {
-				    	$('#cmdHome, #cmdMobileHome').addClass('liMenuSel');
+				    	$('#cmdHome').addClass('liMenuSel');
 							setTimeout( function () {
                 $('#divNavGallery').children().slideDown(300);
               },300 );
@@ -53,10 +53,10 @@ $(document).ready(function() {
 
 					if (_Indx.fnResetPage(selectedPage)) {
   					if (selectedPage === 'InfoAndContact') {
-				    	$('#cmdInfoAndContact, #cmdMobileInfoAndContact').addClass('liMenuSel');
+				    	$('#cmdInfoAndContact').addClass('liMenuSel');
 							setTimeout( function () { $('#divInfoAndContact').slideDown(300); },300 );
   					} else if (selectedPage === 'Home') {
-				    	$('#cmdHome, #cmdMobileHome').addClass('liMenuSel');
+				    	$('#cmdHome').addClass('liMenuSel');
 							setTimeout( function () {
                 $('#divNavGallery').children().slideDown(300);
               },300 );
@@ -208,7 +208,7 @@ $(document).ready(function() {
 		 // remove currently selected carousel - if any
 		 $('#divGallery').slideUp(300).empty();
 		 // reset all links and menu items
-		 $('.liMenu, .liMobileTopMenu').removeClass('liMenuSel');
+		 $('.liMenu').removeClass('liMenuSel');
 		 $('.dropbtn').removeClass('menuSel');
 		 // set new page
 		 $.currentPage = selectedPage;
@@ -325,7 +325,7 @@ $(document).ready(function() {
 	        break;
 		    case 'Footer':
           if (_Indx.fnResetPage('Home')) {
-            $('#cmdHome, #cmdMobileHome').addClass('liMenuSel');
+            $('#cmdHome').addClass('liMenuSel');
             setTimeout( function () {
               $('#divNavGallery').children().slideDown(300);
             },300 );
