@@ -62,7 +62,7 @@ a { transition: background-color 300ms, color 300ms }
 	justify-content: flex-end;
 	align-items: flex-start;
 	font-size: 12px;
-	margin: 0;
+	margin: 10px 0;
 	min-width: 290px;
 }
 #menuIcon {
@@ -70,8 +70,8 @@ a { transition: background-color 300ms, color 300ms }
 	margin: 0 10px 0 0;
 	max-width: 40px;
 	position: relative;
-	top: -2px;
-	left: -4px;
+	top: -9px;
+	left: -18px;
 }
 #menuIcon:hover, .menuUpIcon:hover {
 	cursor: pointer;
@@ -357,7 +357,7 @@ footer div {
 /* media queries */
 
 @media screen and (max-width: 540px) {
-	#desktopNav, #headerMenu {
+	#desktopNav {
 		display: none;
 	}
 	#menuIcon {
