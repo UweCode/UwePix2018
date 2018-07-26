@@ -63,7 +63,7 @@ a { transition: background-color 300ms, color 300ms }
 	align-items: flex-start;
 	font-size: 12px;
 	margin: 10px 0;
-	min-width: 290px;
+	min-width: 340px;
 }
 #menuIcon {
 	display: none;
@@ -138,6 +138,9 @@ li.liTop {
 #mobileNav {
 	display: none;
 	margin-bottom: 30px;
+}
+#mobileHeaderMenu {
+	margin-left: 16px;
 }
 #ulMobileMenu {
 	display: flex;
@@ -357,6 +360,9 @@ footer div {
 /* media queries */
 
 @media screen and (max-width: 540px) {
+	#headerMenu {
+		justify-content: flex-start;
+	}
 	#desktopNav {
 		display: none;
 	}
