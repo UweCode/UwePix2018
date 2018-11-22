@@ -27,6 +27,11 @@ $(document).ready(function() {
       ],
       group: ""
     },
+    infoandcontact: {
+      title: "InfoAndContact",
+      data: [],
+      group: ""
+    },
     nightlight: {
       title: "Nightlight",
       data: [
@@ -333,12 +338,12 @@ $(document).ready(function() {
 
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
+		_Indx.fnBuildPage($.pages.home);
 
     // Update this history event so that the state object contains the data
     // for the homepage.
     history.replaceState($.pages.home, $.pages.home.title, "");
 
-		_Indx.fnBuildPage($.pages.home);
     $('#year').text(new Date().getFullYear());
 	},20 );
 
@@ -365,7 +370,11 @@ $(document).ready(function() {
               },300 );
   					} else {
   						setTimeout( function () { $('#divGallery').slideDown(300); },300 );
-              setTimeout( function () { _Indx.fnBuildPage($.pages[selectedPage.toLowerCase()]); },600 );
+              setTimeout( function () {
+                let page = $.pages[selectedPage.toLowerCase()];
+                _Indx.fnBuildPage(page);
+                history.pushState(page, page.title);
+              },600 );
   					}
   				}
         }
@@ -392,7 +401,11 @@ $(document).ready(function() {
                 $('.menuUpIcon').trigger('click');
               }
   						setTimeout( function () { $('#divGallery').slideDown(300); },300 );
-              setTimeout( function () { _Indx.fnBuildPage($.pages[selectedPage.toLowerCase()]); },600 );
+              setTimeout( function () {
+                let page = $.pages[selectedPage.toLowerCase()];
+                _Indx.fnBuildPage(page);
+                history.pushState(page, page.title);
+              },600 );
   					}
   				}
         }
@@ -440,7 +453,11 @@ $(document).ready(function() {
 
         if (_Indx.fnResetPage($.pages[selectedPage.toLowerCase()])) {
 					setTimeout( function () { $('#divGallery').slideDown(300); },300 );
-          setTimeout( function () { _Indx.fnBuildPage($.pages[selectedPage.toLowerCase()]); },600 );
+          setTimeout( function () {
+            let page = $.pages[selectedPage.toLowerCase()];
+            _Indx.fnBuildPage(page);
+            history.pushState(page, page.title);
+          },600 );
 				}
 			});
 		};
@@ -449,7 +466,7 @@ $(document).ready(function() {
     window.addEventListener('popstate', function(event) {
       let page = event.state;
       if(page){
-        _Indx.fnBuildPage(page[0]);
+        $('#cmd' + page.title).trigger('click');
       }
     });
 
@@ -552,24 +569,26 @@ $(document).ready(function() {
 
    // if a new page is selected, load that page, create html for all sections
    _Indx.fnBuildPage = (page) => {
-      if(page.title == "Home") {
-        $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
-   			setTimeout( () => {
-   				_Indx.fnInitNavCarousel();
-   				_Indx.fnRegisterNavCarouselEvents();
-   				$('#divNavGallery').children().slideDown(300);
-   			},20 )
-      } else {
-        $('#divGallery').prepend(_Indx.fnGetCarousel(page));
-  			setTimeout( () => {
-  				_Indx.fnInitGalleryCarousel();
-  				$('#divGallery').children().slideDown(300);
-  			},20 );
-      };
-      // Create a new history item. Fetch the page data using the URL in the link.
-      let pageURL = page.title + ".html";
+     if (page) {
+      document.title = page.title;
 
-      history.pushState(page, page.title, "");
+       if(page.title == "Home") {
+         $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
+   			 setTimeout( () => {
+   				 _Indx.fnInitNavCarousel();
+   				 _Indx.fnRegisterNavCarouselEvents();
+   				 $('#divNavGallery').children().slideDown(300);
+   			 },20 )
+       } else {
+         $('#divGallery').prepend(_Indx.fnGetCarousel(page));
+  			 setTimeout( () => {
+  				 _Indx.fnInitGalleryCarousel();
+  				 $('#divGallery').children().slideDown(300);
+  			  },20 );
+        };
+        // Create a new history item. Fetch the page data using the URL in the link.
+        let pageURL = page.title + ".html";
+      }
  		};
 
 	  // get the nav carousel for the home page ; add events
