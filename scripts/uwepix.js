@@ -511,11 +511,17 @@ $(document).ready(function() {
               0:{
                   items:1
               },
-              750:{
+              500:{
                   items:2
               },
-              2000:{
+              1200:{
                   items:3
+              },
+              1600:{
+                  items:4
+              },
+              2000:{
+                  items:5
               }
           }
       })

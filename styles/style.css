@@ -25,16 +25,23 @@ i {
   display: inline-block;
   padding: 3px;
 }
-a, a:hover, a:active, a:focus {
+a {
 	color: #000000;
 	outline: none;
 	text-decoration: none;
 }
-a:hover {
-	color: #006689;
-}
 
-a { transition: background-color 300ms, color 300ms }
+#txtFooter:hover {
+	color: #006689;
+	cursor: pointer;
+}
+#txtFooter { transition: background-color 300ms, color 300ms }
+
+#ulMenu li:hover {
+	color: #006689;
+	cursor: pointer;
+}
+#ulMenu li { transition: background-color 300ms, color 300ms }
 
 #page {
 	padding: 20px 20px 0 20px;
@@ -224,6 +231,7 @@ h4 {
 .navbar a:hover, .dropdown:hover .dropbtn {
     background-color: #006689;
 		color: #fff;
+		cursor: pointer;
 
 		-webkit-transition: color 300ms linear, background-color 300ms linear;
 		-moz-transition: color 300ms linear, background-color 300ms linear;
@@ -377,5 +385,11 @@ footer div {
 @media screen and (min-height: 400px) {
 	footer {
 	  height: 30px;
+	}
+}
+
+@media screen and (min-height: 450px) {
+	footer {
+	  height: 40px;
 	}
 }
