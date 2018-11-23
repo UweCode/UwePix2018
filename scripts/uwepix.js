@@ -363,7 +363,13 @@ $(document).ready(function() {
 					if (_Indx.fnResetPage($.pages[selectedPage.toLowerCase()])) {
   					if (selectedPage === 'InfoAndContact') {
 				    	$('#cmdInfoAndContact').addClass('liMenuSel');
-							setTimeout( function () { $('#divInfoAndContact').slideDown(300); },300 );
+							setTimeout( function () {
+                $('#divInfoAndContact').slideDown(300);
+                if (!$.isHistory) {
+                  history.pushState(page, page.title);
+                }
+                $.isHistory = false;
+              },300 );
   					} else if (selectedPage === 'Home' || selectedPage === 'Footer') {
               _Indx.fnLoadHomePage();
   					} else {
@@ -395,7 +401,13 @@ $(document).ready(function() {
 					if (_Indx.fnResetPage($.pages[selectedPage.toLowerCase()])) {
   					if (selectedPage === 'InfoAndContact') {
 				    	$('#cmdInfoAndContact').addClass('liMenuSel');
-							setTimeout( function () { $('#divInfoAndContact').slideDown(300); },300 );
+							setTimeout( function () {
+                $('#divInfoAndContact').slideDown(300);
+                if (!$.isHistory) {
+                  history.pushState(page, page.title);
+                }
+                $.isHistory = false;
+              },300 );
   					} else if (selectedPage === 'Home') {
               _Indx.fnLoadHomePage();
   					} else {
