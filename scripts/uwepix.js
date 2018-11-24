@@ -8,6 +8,7 @@ $(document).ready(function() {
   $.currentPage = undefined;							// currently selected main section/gallery
   $.showHome = true;
   $.isHistory = false;
+  $.baseUrl = "";
 
   $.pages = {
     home: {
@@ -337,13 +338,14 @@ $(document).ready(function() {
 
 	// START-UP //
 
+  let url = window.location.href;
+
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
-		_Indx.fnLoadPage($.pages.home);
+    let page = _Indx.fnGetStartUpPage(url);
+		_Indx.fnLoadPage(page);
 
-    // Update this history event so that the state object contains the data
-    // for the homepage.
-    history.replaceState($.pages.home, $.pages.home.title, "");
+    history.replaceState(page, page.title, $.baseUrl + "#" + page.title.toLowerCase());
 
     $('#year').text(new Date().getFullYear());
 	},20 );
@@ -393,7 +395,7 @@ $(document).ready(function() {
 					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
           let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
 
-					if (_Indx.fnResetPage()) {
+					if (_Indx.fnResetPage(selectedPage)) {
   					if (selectedPageTitle === 'InfoAndContact') {
               _Indx.fnLoadInfoAndContact();
   					} else if (selectedPageTitle === 'Home') {
@@ -511,11 +513,17 @@ $(document).ready(function() {
               0:{
                   items:1
               },
-              750:{
+              500:{
                   items:2
               },
-              2000:{
+              1200:{
                   items:3
+              },
+              1600:{
+                  items:4
+              },
+              2000:{
+                  items:5
               }
           }
       })
@@ -527,12 +535,27 @@ $(document).ready(function() {
 
 	 // FUNCTIONS //
 
+   _Indx.fnGetStartUpPage = (url) => {
+     let urlParts = url.split('#');
+     let page = $.pages.home;
+
+     if (urlParts.length === 2) {
+       page = $.pages[urlParts[1].toLowerCase()];
+     }
+     // Update this history event so that the state object contains the data
+     // for the homepage.
+     if (urlParts.length > 0) {
+       $.baseUrl = urlParts[0];
+     }
+     return page;
+   };
+
    _Indx.fnVerifyMobileNav = () => {
      if($('#mobileNav').is(':visible')) {
        $.showHome = false;
        $('.menuUpIcon').trigger('click');
      }
-   }
+   };
 
 	 // prepare page to load new content
 	 _Indx.fnResetPage = (page) => {
@@ -568,7 +591,7 @@ $(document).ready(function() {
        let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
        _Indx.fnLoadPage(selectedPage);
        if (!$.isHistory) {
-         history.pushState(selectedPage, selectedPage.title);
+         history.pushState(selectedPage, selectedPage.title, $.baseUrl + "#" + selectedPage.title.toLowerCase());
        }
        $.isHistory = false;
      },600 );
@@ -579,7 +602,7 @@ $(document).ready(function() {
      if (page) {
        document.title = page.title;
 
-       if(page.title == "Home") {
+       if(page.title === "Home") {
          $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
    			 setTimeout( () => {
    				 _Indx.fnInitNavCarousel();
@@ -612,7 +635,7 @@ $(document).ready(function() {
       setTimeout( function () {
         $('#divInfoAndContact').slideDown(300);
         if (!$.isHistory) {
-          history.pushState(page, page.title);
+          history.pushState(page, page.title, $.baseUrl + "#" + page.title.toLowerCase());
         }
         $.isHistory = false;
       },300 );
@@ -623,10 +646,10 @@ $(document).ready(function() {
 			let navGallery = '<div id="divNavCarousel" class="currGallery"><div id="navCarousel" class="owl-carousel owl-theme">';
 			_Indx.fnSetUpMenues($.pages.home);
 
-			$.each( $.pages.home.data, function ( index, value ) {	       // create html for carousel section
-	  		if(value.length == 2)															     // image name [0], image alt [1]
+  			$.each( $.pages.home.data, function ( index, value ) {	  // create html for carousel section
+	  		if(value.length === 2)															      // image name [0], image alt [1]
 			  	navGallery += '<div class="item"><img class="lazyOwl" src="images/Home/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-	  		else if(value.length == 3 && value[2].length > 0)		  // image name [0], image alt [1], image link-to [2]
+	  		else if(value.length === 3 && value[2].length > 0)		      // image name [0], image alt [1], image link-to [2]
 	  			navGallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2] + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
 			});
 			navGallery += '</div></div>';
@@ -640,9 +663,9 @@ $(document).ready(function() {
 			_Indx.fnSetUpMenues(page);
 
 			$.each( page.data, function ( index, value ) {	       // create html for carousel section
-	  		if(value.length == 2)															     // image name [0], image alt [1]
+	  		if(value.length === 2)															 // image name [0], image alt [1]
 			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-	  		else if(value.length == 3 && value[2].length > 0)		  // image name [0], image alt [1], image link-to [2]
+	  		else if(value.length === 3 && value[2].length > 0)	 // image name [0], image alt [1], image link-to [2]
 	  			gallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2] + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
 			});
 			gallery += '</div></div>';
