@@ -345,7 +345,7 @@ $(document).ready(function() {
     let page = _Indx.fnGetStartUpPage(url);
 		_Indx.fnLoadPage(page);
 
-    history.replaceState(page, page.title, $.baseUrl + "#" + page.title.toLowerCase());
+    history.replaceState(page, page.title);
 
     $('#year').text(new Date().getFullYear());
 	},20 );
@@ -591,7 +591,7 @@ $(document).ready(function() {
        let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
        _Indx.fnLoadPage(selectedPage);
        if (!$.isHistory) {
-         history.pushState(selectedPage, selectedPage.title, $.baseUrl + "#" + selectedPage.title.toLowerCase());
+         history.pushState(selectedPage, selectedPage.title);
        }
        $.isHistory = false;
      },600 );
@@ -635,7 +635,7 @@ $(document).ready(function() {
       setTimeout( function () {
         $('#divInfoAndContact').slideDown(300);
         if (!$.isHistory) {
-          history.pushState(page, page.title, $.baseUrl + "#" + page.title.toLowerCase());
+          history.pushState(page, page.title);
         }
         $.isHistory = false;
       },300 );
