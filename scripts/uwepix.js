@@ -345,7 +345,7 @@ $(document).ready(function() {
     let page = _Indx.fnGetStartUpPage(url);
 		_Indx.fnLoadPage(page);
 
-    history.replaceState(page, page.title);
+    history.replaceState(page, page.title, $.baseUrl);
 
     $('#year').text(new Date().getFullYear());
 	},20 );
