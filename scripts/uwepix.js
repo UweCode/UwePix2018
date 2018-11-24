@@ -8,6 +8,7 @@ $(document).ready(function() {
   $.currentPage = undefined;							// currently selected main section/gallery
   $.showHome = true;
   $.isHistory = false;
+  $.baseUrl = "";
 
   $.pages = {
     home: {
@@ -344,6 +345,8 @@ $(document).ready(function() {
     let page = _Indx.fnGetStartUpPage(url);
 		_Indx.fnLoadPage(page);
 
+    history.replaceState(page, page.title, $.baseUrl + "#" + page.title.toLowerCase());
+
     $('#year').text(new Date().getFullYear());
 	},20 );
 
@@ -392,7 +395,7 @@ $(document).ready(function() {
 					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
           let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
 
-					if (_Indx.fnResetPage()) {
+					if (_Indx.fnResetPage(selectedPage)) {
   					if (selectedPageTitle === 'InfoAndContact') {
               _Indx.fnLoadInfoAndContact();
   					} else if (selectedPageTitle === 'Home') {
@@ -542,7 +545,7 @@ $(document).ready(function() {
      // Update this history event so that the state object contains the data
      // for the homepage.
      if (urlParts.length > 0) {
-       history.replaceState(page, page.title, urlParts[0]);
+       $.baseUrl = urlParts[0];
      }
      return page;
    };
@@ -588,7 +591,7 @@ $(document).ready(function() {
        let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
        _Indx.fnLoadPage(selectedPage);
        if (!$.isHistory) {
-         history.pushState(selectedPage, selectedPage.title);
+         history.pushState(selectedPage, selectedPage.title, $.baseUrl + "#" + selectedPage.title.toLowerCase());
        }
        $.isHistory = false;
      },600 );
@@ -632,7 +635,7 @@ $(document).ready(function() {
       setTimeout( function () {
         $('#divInfoAndContact').slideDown(300);
         if (!$.isHistory) {
-          history.pushState(page, page.title);
+          history.pushState(page, page.title, $.baseUrl + "#" + page.title.toLowerCase());
         }
         $.isHistory = false;
       },300 );
