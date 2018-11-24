@@ -342,7 +342,10 @@ $(document).ready(function() {
 
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
+    _Indx.fnRegisterNavGallery();
+
     let page = _Indx.fnGetStartUpPage(url);
+    $.currentPage = page.title;
 		_Indx.fnLoadPage(page);
 
     history.replaceState(page, page.title, $.baseUrl);
@@ -374,6 +377,12 @@ $(document).ready(function() {
   				}
         }
 			});
+
+      _Indx.fnRegisterNavGallery = () => {
+        $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
+        _Indx.fnInitNavCarousel();
+        _Indx.fnRegisterNavCarouselEvents();
+      };
 
     	// register image-click events (Home Page: for opening a particular gallery)
       _Indx.fnRegisterNavCarouselEvents = () => {
@@ -454,6 +463,7 @@ $(document).ready(function() {
 				if (_Indx.fnResetPage(page)) {
 					if (page.title === 'InfoAndContact') {
 			    	$('#cmdInfoAndContact').addClass('liMenuSel');
+            document.title = "Info + Contact";
 						setTimeout( function () {
               $('#divInfoAndContact').slideDown(300);
             },300 );
@@ -578,7 +588,7 @@ $(document).ready(function() {
 		 // reset all links and menu items
 		 $('.liMenu').removeClass('liMenuSel');
 		 $('.dropbtn').removeClass('menuSel');
-		 // set new page
+		 // set current page to new page
 		 $.currentPage = page.title;
 
 		 return true;
@@ -603,13 +613,9 @@ $(document).ready(function() {
        document.title = page.title;
 
        if(page.title === "Home") {
-         $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
-   			 setTimeout( () => {
-   				 _Indx.fnInitNavCarousel();
-   				 _Indx.fnRegisterNavCarouselEvents();
-   				 $('#divNavGallery').children().slideDown(300);
-   			 },20 )
+   		   $('#divNavGallery').children().slideDown(300);
        } else {
+         $('#divNavGallery').children().slideUp();
          _Indx.fnBuildPage(page);
        }
      }
@@ -626,13 +632,20 @@ $(document).ready(function() {
     _Indx.fnLoadHomePage = () => {
       $('#cmdHome').addClass('liMenuSel');
       setTimeout( function () {
+        document.title = "Home";
         $('#divNavGallery').children().slideDown(300);
+        if (!$.isHistory) {
+          let page = $.pages.home;
+          history.pushState(page, page.title);
+        }
+        $.isHistory = false;
       },300 );
     };
 
     _Indx.fnLoadInfoAndContact = (page) => {
       $('#cmdInfoAndContact').addClass('liMenuSel');
       setTimeout( function () {
+        document.title = "Info + Contact";
         $('#divInfoAndContact').slideDown(300);
         if (!$.isHistory) {
           history.pushState(page, page.title);
