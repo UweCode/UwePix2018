@@ -485,10 +485,10 @@ $(document).ready(function() {
               500:{
                   items:2
               },
-              1200:{
+              1000:{
                   items:3
               },
-              1600:{
+              1500:{
                   items:4
               },
               2000:{
@@ -517,10 +517,10 @@ $(document).ready(function() {
               500:{
                   items:2
               },
-              1200:{
+              1000:{
                   items:3
               },
-              1600:{
+              1500:{
                   items:4
               },
               2000:{
