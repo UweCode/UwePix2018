@@ -15,14 +15,14 @@ $(document).ready(function() {
       title: "Home",
       data: [
         ['NL35home.jpg','Double-click to open the &quot;Nightlight&quot; gallery','Nightlight'],
-        ['WinterInPdx_34.jpg','Double-click to open the &quot;A Winternight in NE Portland&quot; gallery','WinterInPdx'],
-        ['WallsPoles_04home.jpg','Double-click to open the &quot;Abstracts on Walls & Utility Poles&quot; gallery','WallsPoles'],
+        ['WinterInPdx_34.jpg','Double-click to open the &quot;A Winternight in NE Portland&quot; gallery','WinternightInNEPortland'],
+        ['WallsPoles_04home.jpg','Double-click to open the &quot;Abstracts on Walls & Utility Poles&quot; gallery','WallsAndPoles'],
         ['Por102home.jpg','Double-click to open the &quot;Portraits I&quot; gallery','EarlyPortraits'],
         ['Por203home.jpg','Double-click to open the &quot;Portraits II&quot; gallery','Portraits'],
         ['MovieDirectors09home.jpg','Double-click to open the &quot;Movie Directors&quot; gallery','MovieDirectors'],
         ['CoffeePlant09home.jpg','Double-click to open the &quot;Coffee Plant&quot; gallery','CoffeePlant'],
         ['OneWedding05home.jpg','Double-click to open the &quot;Wedding&quot; gallery','OneWedding'],
-        ['WiedenKennedy06home.jpg','Double-click to open the &quot;Wieden+Kennedy Building&quot; gallery','WiedenKennedy'],
+        ['WiedenKennedy06home.jpg','Double-click to open the &quot;Wieden+Kennedy Building&quot; gallery','Wieden+Kennedy'],
         ['PaintedHills02home.jpg','Double-click to open the &quot;Painted Hills&quot; gallery','PaintedHills'],
         ['Berlin03home.jpg','Double-click to open the &quot;Berlin&quot; gallery','Berlin'],
         ['BerlinWallArt01home.jpg','Double-click to open the &quot;Berlin Wall Art&quot; gallery','BerlinWallArt']
@@ -30,7 +30,7 @@ $(document).ready(function() {
       group: ""
     },
     infoandcontact: {
-      title: "InfoAndContact",
+      title: "Info And Contact",
       data: [],
       group: ""
     },
@@ -85,8 +85,8 @@ $(document).ready(function() {
       ],
       group: "Portfolios"
     },
-    winterinpdx: {
-      title: "WinterInPdx",
+    winternightinneportland: {
+      title: "Winternight In NE Portland",
       data: [['WinterInPdx_01.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
         ['WinterInPdx_35.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
         ['WinterInPdx_02.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
@@ -110,8 +110,8 @@ $(document).ready(function() {
       ],
       group: "Portfolios"
     },
-    wallspoles: {
-      title: "WallsPoles",
+    wallsandpoles: {
+      title: "Walls And Poles",
       data: [
         ['WallsPoles_01.jpg','Walls & Utility Poles - 1'],
         ['WallsPoles_02.jpg','Walls & Utility Poles - 2'],
@@ -129,7 +129,7 @@ $(document).ready(function() {
       group: "Portfolios"
     },
     earlyportraits: {
-      title: "EarlyPortraits",
+      title: "Early Portraits",
       data: [
         ['Por112.jpg','Steffen Butz, Cartoonist & Illustrator 1993'],
         ['Por101.jpg','Jacek, Munich 1985'],
@@ -161,7 +161,7 @@ $(document).ready(function() {
       group: "People"
     },
     moviedirectors: {
-      title: "MovieDirectors",
+      title: "Movie Directors",
       data: [
         ['MovieDirectors01.jpg','Andrew Dominik, Park City, UT 2001'],
         ['MovieDirectors02.jpg','Jan Hrebejk, Park City, UT 2001'],
@@ -189,7 +189,7 @@ $(document).ready(function() {
       group: "People"
     },
     coffeeplant: {
-      title: "CoffeePlant",
+      title: "Coffee Plant",
       data: [
         ['CoffeePlant01.jpg','Mike, owner'],
         ['CoffeePlant02.jpg','Randal & Angie'],
@@ -211,7 +211,7 @@ $(document).ready(function() {
       group: "People"
     },
     onewedding: {
-      title: "OneWedding",
+      title: "One Wedding",
       data: [
         ['OneWedding01.jpg','Wedding in Cesky Krumlov, 1995 1'],
         ['OneWedding02.jpg','Wedding in Cesky Krumlov, 1995 2'],
@@ -230,8 +230,8 @@ $(document).ready(function() {
       ],
       group: "People"
     },
-    wiedenkennedy: {
-      title: "WiedenKennedy",
+    wiedenandkennedy: {
+      title: "Wieden+Kennedy",
       data: [
         ['WiedenKennedy01.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 01'],
         ['WiedenKennedy02.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 02'],
@@ -239,15 +239,6 @@ $(document).ready(function() {
         ['WiedenKennedy04.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 04'],
         ['WiedenKennedy05.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 05'],
         ['WiedenKennedy06.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 06'],
-        ['WiedenKennedy02.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 02'],
-        ['WiedenKennedy03.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 03'],
-        ['WiedenKennedy04.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 04'],
-        ['WiedenKennedy05.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 05'],
-        ['WiedenKennedy06.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 06'],
-        ['WiedenKennedy07.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 07'],
-        ['WiedenKennedy08.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 08'],
-        ['WiedenKennedy09.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 09'],
-        ['WiedenKennedy10.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 10'],
         ['WiedenKennedy07.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 07'],
         ['WiedenKennedy08.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 08'],
         ['WiedenKennedy09.jpg','Wieden+Kennedy Building, Portland, OR 2000 - 09'],
@@ -256,7 +247,7 @@ $(document).ready(function() {
       group: "Architecture"
     },
     paintedhills: {
-      title: "PaintedHills",
+      title: "Painted Hills",
       data: [
         ['PaintedHills02.jpg','PaintedHills, OR, 2015 - 2'],
         ['PaintedHills04.jpg','PaintedHills, OR, 2015 - 4'],
@@ -307,7 +298,7 @@ $(document).ready(function() {
       group: "Travel"
     },
     berlinwallart: {
-      title: "BerlinWallArt",
+      title: "Berlin Wall Art",
       data: [
         ['BerlinWallArt01.jpg','Berlin Hackersche Hoefe: Wall-Art 2014 - 01'],
         ['BerlinWallArt11.jpg','Berlin Kreuzberg: Wall-Art 2014 - 11'],
@@ -391,7 +382,7 @@ $(document).ready(function() {
       	$('img.imgLink').dblclick( function (e) {
     			let selectedPageTitle = e.currentTarget.id;
 
-          if (_Indx.fnResetPage($.pages[selectedPageTitle.toLowerCase()])) {
+          if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()])) {
             _Indx.fnStartLoadingPage(selectedPageTitle);
   				}
   			});
@@ -461,7 +452,7 @@ $(document).ready(function() {
         $.isHistory = true;
 
 				if (_Indx.fnResetPage(page)) {
-					if (page.title === 'InfoAndContact') {
+					if (page.title.replace(/ /g, "") === 'InfoAndContact') {
 			    	$('#cmdInfoAndContact').addClass('liMenuSel');
             document.title = "Info + Contact";
 						setTimeout( function () {
@@ -470,7 +461,7 @@ $(document).ready(function() {
 					} else if (page.title === 'Home' || page.title === 'Footer') {
             _Indx.fnLoadHomePage();
 					} else {
-            _Indx.fnStartLoadingPage(page.title);
+            _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
 					}
 				}
       }
@@ -598,7 +589,7 @@ $(document).ready(function() {
    _Indx.fnStartLoadingPage = (selectedPageTitle) => {
      setTimeout( function () { $('#divGallery').slideDown(300); },300 );
      setTimeout( function () {
-       let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
+       let selectedPage = $.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()];
        _Indx.fnLoadPage(selectedPage);
        if (!$.isHistory) {
          history.pushState(selectedPage, selectedPage.title);
@@ -672,12 +663,12 @@ $(document).ready(function() {
 
 	  // get data for carousel and create the html for this carousel from data ; add events - if any
 		_Indx.fnGetCarousel = (page) => {
-			let gallery = '<div id="divCarousel' + page.title + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">';
+			let gallery = '<div id="divCarousel' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">';
 			_Indx.fnSetUpMenues(page);
 
 			$.each( page.data, function ( index, value ) {	       // create html for carousel section
 	  		if(value.length === 2)															 // image name [0], image alt [1]
-			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
 	  		else if(value.length === 3 && value[2].length > 0)	 // image name [0], image alt [1], image link-to [2]
 	  			gallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2] + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
 			});
@@ -689,12 +680,8 @@ $(document).ready(function() {
 	  // highlight main menu item (top level) --> currently selected ; galleryTypes: "owl", "olOwl"
 		_Indx.fnSetUpMenues = (page) => {
 			//apply menu highlighting
-			switch (page.title) {
-		    case 'home':
-		    	$('.home').addClass('liMenuSel');
-	        sData = $.aHome;
-	        break;
-	        break;
+			if (page.title === "Home") {
+	    	$('.home').addClass('liMenuSel');
       }
 
       switch (page.group) {
