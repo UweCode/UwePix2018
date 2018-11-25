@@ -125,11 +125,13 @@ a {
 li.liTop {
 	margin-top: 8px;
 }
-.liMenuSel a {
+.liMenuSel {
 	color: #FFFFFF;
-	cursor: default;
-	background-color: #7D7D7D;
-	padding: 3px 4px 2px 3px;
+  cursor: default;
+  background-color: #7D7D7D;
+  padding: 4px 4px 2px 4px;
+  position: relative;
+  top: -4px;
 }
 .liNavMenuSel a {
 	color: #FFFFFF;
