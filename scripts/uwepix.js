@@ -8,24 +8,415 @@ $(document).ready(function() {
   $.currentPage = undefined;							// currently selected main section/gallery
   $.showHome = true;
   $.isHistory = false;
+  $.isNavDrag = false;
   $.baseUrl = "";
+
+	// START-UP //
+
+  let url = window.location.href;
+
+	setTimeout( () => { 							      // start-up: go to Home page
+		_Indx.fnRegisterMenuEvents();
+    _Indx.fnRegisterNavGallery();
+
+    let page = _Indx.fnGetStartUpPage(url);
+    $.currentPage = page.title;
+		_Indx.fnLoadPage(page);
+
+    history.replaceState(page, page.title, $.baseUrl);
+
+    $('#year').text(new Date().getFullYear());
+	},20 );
+
+	(function (_Indx, $, undefined) {        // BEGIN: Namespace for code on the index.htm page //
+
+	  // EVENTS //
+
+  	// register menu-click events
+  	_Indx.fnRegisterMenuEvents = () => {
+			$('.menu').click( function (e) {
+				let menuId = e.currentTarget.id;
+
+				if (menuId.length > 3) {
+					let selectedPageTitle = menuId.substring(3,e.currentTarget.id.length).replace("Footer","Home");
+          let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
+
+					if (_Indx.fnResetPage(selectedPage)) {
+  					if (selectedPageTitle === 'InfoAndContact') {
+              _Indx.fnLoadInfoAndContact(selectedPage);
+  					} else if (selectedPageTitle === 'Home' || selectedPageTitle === 'Footer') {
+              _Indx.fnLoadHomePage();
+  					} else {
+              _Indx.fnStartLoadingPage(selectedPageTitle);
+  					}
+  				}
+        }
+			});
+
+      _Indx.fnRegisterNavGallery = () => {
+        $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
+        _Indx.fnInitNavCarousel();
+        _Indx.fnRegisterNavCarouselEvents();
+      };
+
+    	// register image-click events (Home Page: for opening a particular gallery)
+      _Indx.fnRegisterNavCarouselEvents = () => {
+      	$('img.imgLink').off('mousedown');
+        $('img.imgLink').off('mouseup');
+
+      	$('img.imgLink').on('mousedown', function (e) {
+    			let selectedPageTitle = e.currentTarget.id;
+          $.isNavDrag = false;
+  			});
+
+      	$('img.imgLink').on('mouseup', function (e) {
+    			let selectedPageTitle = e.currentTarget.id;
+
+          if(!$.isNavDrag) {
+            if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()])) {
+              _Indx.fnStartLoadingPage(selectedPageTitle);
+    				}
+          } else {
+            $.isNavDrag = false;
+          }
+  			});
+  		};
+
+			$('.mobileMenu').click( function (e) {
+				let menuId = e.currentTarget.id;
+
+				if (menuId.length > 9) {
+					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
+          let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
+
+					if (_Indx.fnResetPage(selectedPage)) {
+  					if (selectedPageTitle === 'InfoAndContact') {
+              _Indx.fnLoadInfoAndContact();
+  					} else if (selectedPageTitle === 'Home') {
+              _Indx.fnLoadHomePage();
+  					} else {
+              if($('#mobileNav').is(':visible')) {
+                $.showHome = false;
+                $('.menuUpIcon').trigger('click');
+              }
+              _Indx.fnStartLoadingPage(selectedPageTitle);
+  					}
+  				}
+        }
+			});
+
+      // show / hide the mobile menu
+      $('#menuIcon').click( function (e) {
+        $('#menuIcon').hide(300);
+        $('#menuIconUp').show(300);
+        setTimeout( function () {
+          $.currentPage = "MobileNav";
+          $('#mobileNav').slideDown(800);
+
+          // hide or remove other page content
+           if ($('#divInfoAndContact').is(':visible')) {
+             $('#divInfoAndContact').slideUp(300);
+           }
+           if($('#divNavGallery').is(':visible')){
+             $('#divNavGallery').children().slideUp(300);
+           }
+      		 // remove currently selected carousel - if any
+      		 $('#divGallery').slideUp(300).empty();
+        },300 );
+      });
+
+      $('.menuUpIcon').click( function (e) {
+        if($.showHome) {
+          _Indx.fnLoadHomePage();
+        }
+
+        $('#mobileNav').slideUp(800);
+        setTimeout( function () {
+          $('#menuIconUp').hide(300);
+          $('#menuIcon').show(300);
+          $.showHome = true;
+        },800 );
+      });
+		};
+
+    // Update the page content when the popstate event is called.
+    window.addEventListener('popstate', function(event) {
+      let page = event.state;
+      if(page){
+        $.isHistory = true;
+
+				if (_Indx.fnResetPage(page)) {
+					if (page.title.replace(/ /g, "") === 'InfoAndContact') {
+			    	$('#cmdInfoAndContact').addClass('liMenuSel');
+            document.title = "Info + Contact";
+						setTimeout( function () {
+              $('#divInfoAndContact').slideDown(300);
+            },300 );
+					} else if (page.title === 'Home' || page.title === 'Footer') {
+            _Indx.fnLoadHomePage();
+					} else {
+            _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
+					}
+				}
+      }
+    });
+
+		// jQuery widgets //
+
+		_Indx.fnInitNavCarousel = () => {								// init navigation owl carousel on the home page
+      $('#navCarousel').owlCarousel({
+          loop: true,
+          margin: 10,
+          nav: true,
+          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+          navSpeed: 500,
+          dotsSpeed: 500,
+          slideBy: 'page',
+          responsive:{
+              0:{
+                  items:1
+              },
+              500:{
+                  items:2
+              },
+              1000:{
+                  items:3
+              },
+              1500:{
+                  items:4
+              },
+              2000:{
+                  items:5
+              }
+          },
+          onDrag: _Indx.fnSetNavIsDrag
+      })
+		};
+
+		_Indx.fnInitGalleryCarousel = () => {								// init gallery carousel
+      $('#galleryCarousel').owlCarousel({
+          items: 1,
+          loop: true,
+          margin: 10,
+          nav: true,
+          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+          navSpeed: 800,
+          dotsSpeed: 800,
+  	  		stopOnHover : true,
+  		    lazyLoad : true,
+          slideBy: 'page',
+          responsive:{
+              0:{
+                  items:1
+              },
+              500:{
+                  items:2
+              },
+              1000:{
+                  items:3
+              },
+              1500:{
+                  items:4
+              },
+              2000:{
+                  items:5
+              }
+          }
+      })
+		};
+
+    setTimeout( () => {
+      $(window).on('resize', _.debounce(_Indx.fnVerifyMobileNav, 150));
+    },20 )
+
+	 // FUNCTIONS //
+
+   _Indx.fnSetNavIsDrag = () => {
+     $.isNavDrag = true;
+   }
+
+   _Indx.fnGetStartUpPage = (url) => {
+     let urlParts = url.split('#');
+     let page = $.pages.home;
+
+     if (urlParts.length === 2) {
+       page = $.pages[urlParts[1].toLowerCase()];
+     }
+     // Update this history event so that the state object contains the data
+     // for the homepage.
+     if (urlParts.length > 0) {
+       $.baseUrl = urlParts[0];
+     }
+     return page;
+   };
+
+   _Indx.fnVerifyMobileNav = () => {
+     if($('#mobileNav').is(':visible')) {
+       $.showHome = false;
+       $('.menuUpIcon').trigger('click');
+     }
+   };
+
+	 // prepare page to load new content
+	 _Indx.fnResetPage = (page) => {
+		 if(page.title === $.currentPage) {
+			 return false; // current selection is already loaded: don't do anything
+		 }
+
+     if ($('#divInfoAndContact').is(':visible')) {
+       $('#divInfoAndContact').slideUp(300);
+     }
+     if($('#divNavGallery').is(':visible')){
+       $('#divNavGallery').children().slideUp(300);
+     }
+     if($('#mobileNav').is(':visible')){
+       $.showHome = false;
+       $('.menuUpIcon').trigger('click');
+     }
+		 // remove currently selected carousel - if any
+		 $('#divGallery').slideUp(300).empty();
+		 // reset all links and menu items
+		 $('.liMenu').removeClass('liMenuSel');
+		 $('.dropbtn').removeClass('menuSel');
+		 // set current page to new page
+		 $.currentPage = page.title;
+
+		 return true;
+	 };
+
+   // load newly selected page
+   _Indx.fnStartLoadingPage = (selectedPageTitle) => {
+     setTimeout( function () { $('#divGallery').slideDown(300); },300 );
+     setTimeout( function () {
+       let selectedPage = $.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()];
+       _Indx.fnLoadPage(selectedPage);
+       if (!$.isHistory) {
+         history.pushState(selectedPage, selectedPage.title);
+       }
+       $.isHistory = false;
+     },600 );
+   };
+
+   // load newly selected page
+   _Indx.fnLoadPage = (page) => {
+     if (page) {
+       document.title = page.title;
+
+       if(page.title === "Home") {
+   		   $('#divNavGallery').children().slideDown(300);
+       } else {
+         $('#divNavGallery').children().slideUp();
+         _Indx.fnBuildPage(page);
+       }
+     }
+   };
+
+    _Indx.fnBuildPage = (page) => {
+      $('#divGallery').prepend(_Indx.fnGetCarousel(page));
+			setTimeout( () => {
+			   _Indx.fnInitGalleryCarousel();
+				 $('#divGallery').children().slideDown(300);
+			},20 );
+		};
+
+    _Indx.fnLoadHomePage = () => {
+      $('#cmdHome').addClass('liMenuSel');
+      setTimeout( function () {
+        document.title = "Home";
+        $('#divNavGallery').children().slideDown(300);
+        if (!$.isHistory) {
+          let page = $.pages.home;
+          history.pushState(page, page.title);
+        }
+        $.isHistory = false;
+      },300 );
+    };
+
+    _Indx.fnLoadInfoAndContact = (page) => {
+      $('#cmdInfoAndContact').addClass('liMenuSel');
+      setTimeout( function () {
+        document.title = "Info + Contact";
+        $('#divInfoAndContact').slideDown(300);
+        if (!$.isHistory) {
+          history.pushState(page, page.title);
+        }
+        $.isHistory = false;
+      },300 );
+    };
+
+	  // get the nav carousel for the home page ; add events
+		_Indx.fnGetNavCarousel = () => {
+			let navGallery = '<div id="divNavCarousel" class="currGallery"><div id="navCarousel" class="owl-carousel owl-theme">';
+			_Indx.fnSetUpMenues($.pages.home);
+
+  			$.each( $.pages.home.data, function ( index, value ) {	  // create html for carousel section
+	  		if(value.length === 2)															      // image name [0], image alt [1]
+			  	navGallery += '<div class="item"><img class="lazyOwl" src="images/Home/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+	  		else if(value.length === 3 && value[2].length > 0)		      // image name [0], image alt [1], image link-to [2]
+	  			navGallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2].replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+			});
+			navGallery += '</div></div>';
+
+			return navGallery;
+	  };
+
+	  // get data for carousel and create the html for this carousel from data ; add events - if any
+		_Indx.fnGetCarousel = (page) => {
+			let gallery = '<div id="divCarousel' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">';
+			_Indx.fnSetUpMenues(page);
+
+			$.each( page.data, function ( index, value ) {	       // create html for carousel section
+	  		if(value.length === 2)															 // image name [0], image alt [1]
+			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "").replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+	  		else if(value.length === 3 && value[2].length > 0)	 // image name [0], image alt [1], image link-to [2]
+	  			gallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2].replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+			});
+			gallery += '</div></div>';
+
+			return gallery;
+	  };
+
+	  // highlight main menu item (top level) --> currently selected ; galleryTypes: "owl", "olOwl"
+		_Indx.fnSetUpMenues = (page) => {
+			//apply menu highlighting
+			if (page.title === "Home") {
+	    	$('.home').addClass('liMenuSel');
+      }
+
+      switch (page.group) {
+		    case 'Portfolios':  									     // Portfolios
+		    	$('#menuPortfolios').addClass('menuSel');
+	        break;
+		    case 'People':  									         // People & Portraits
+		    	$('#menuPeople').addClass('menuSel');
+	        break;
+		    case 'Architecture':  									   // Architecture
+		    	$('#menuArchitecture').addClass('menuSel');
+	        break;
+		    case 'Travel':                       // Travel
+		    	$('#menuTravel').addClass('menuSel');
+	        break;
+		  }
+	  };
+
+	} (window._Indx = window._Indx || {}, jQuery)); // END: Namespace for code on the index.htm page
 
   $.pages = {
     home: {
       title: "Home",
       data: [
-        ['NL35home.jpg','Double-click to open the &quot;Nightlight&quot; gallery','Nightlight'],
-        ['WinterInPdx_34.jpg','Double-click to open the &quot;A Winternight in NE Portland&quot; gallery','WinternightInNEPortland'],
-        ['WallsPoles_04home.jpg','Double-click to open the &quot;Abstracts on Walls & Utility Poles&quot; gallery','WallsAndPoles'],
-        ['Por102home.jpg','Double-click to open the &quot;Portraits I&quot; gallery','EarlyPortraits'],
-        ['Por203home.jpg','Double-click to open the &quot;Portraits II&quot; gallery','Portraits'],
-        ['MovieDirectors09home.jpg','Double-click to open the &quot;Movie Directors&quot; gallery','MovieDirectors'],
-        ['CoffeePlant09home.jpg','Double-click to open the &quot;Coffee Plant&quot; gallery','CoffeePlant'],
-        ['OneWedding05home.jpg','Double-click to open the &quot;Wedding&quot; gallery','OneWedding'],
-        ['WiedenKennedy06home.jpg','Double-click to open the &quot;Wieden+Kennedy Building&quot; gallery','Wieden+Kennedy'],
-        ['PaintedHills02home.jpg','Double-click to open the &quot;Painted Hills&quot; gallery','PaintedHills'],
-        ['Berlin03home.jpg','Double-click to open the &quot;Berlin&quot; gallery','Berlin'],
-        ['BerlinWallArt01home.jpg','Double-click to open the &quot;Berlin Wall Art&quot; gallery','BerlinWallArt']
+        ['NL35home.jpg','Click to open the &quot;Nightlight&quot; gallery','Nightlight'],
+        ['WinterInPdx_34.jpg','Click to open the &quot;A Winternight in NE Portland&quot; gallery','WinternightInNEPortland'],
+        ['WallsPoles_04home.jpg','Click to open the &quot;Abstracts on Walls & Utility Poles&quot; gallery','WallsAndPoles'],
+        ['Por102home.jpg','Click to open the &quot;Portraits I&quot; gallery','EarlyPortraits'],
+        ['Por203home.jpg','Click to open the &quot;Portraits II&quot; gallery','Portraits'],
+        ['MovieDirectors09home.jpg','Click to open the &quot;Movie Directors&quot; gallery','MovieDirectors'],
+        ['CoffeePlant09home.jpg','Click to open the &quot;Coffee Plant&quot; gallery','CoffeePlant'],
+        ['OneWedding05home.jpg','Click to open the &quot;Wedding&quot; gallery','OneWedding'],
+        ['WiedenKennedy06home.jpg','Click to open the &quot;Wieden+Kennedy Building&quot; gallery','Wieden+Kennedy'],
+        ['PaintedHills02home.jpg','Click to open the &quot;Painted Hills&quot; gallery','PaintedHills'],
+        ['Berlin03home.jpg','Click to open the &quot;Berlin&quot; gallery','Berlin'],
+        ['BerlinWallArt01home.jpg','Click to open the &quot;Berlin Wall Art&quot; gallery','BerlinWallArt']
       ],
       group: ""
     },
@@ -326,380 +717,5 @@ $(document).ready(function() {
       group: "Travel"
     }
   }
-
-	// START-UP //
-
-  let url = window.location.href;
-
-	setTimeout( () => { 							      // start-up: go to Home page
-		_Indx.fnRegisterMenuEvents();
-    _Indx.fnRegisterNavGallery();
-
-    let page = _Indx.fnGetStartUpPage(url);
-    $.currentPage = page.title;
-		_Indx.fnLoadPage(page);
-
-    history.replaceState(page, page.title, $.baseUrl);
-
-    $('#year').text(new Date().getFullYear());
-	},20 );
-
-	(function (_Indx, $, undefined) {        // BEGIN: Namespace for code on the index.htm page //
-
-	  // EVENTS //
-
-  	// register menu-click events
-  	_Indx.fnRegisterMenuEvents = () => {
-			$('.menu').click( function (e) {
-				let menuId = e.currentTarget.id;
-
-				if (menuId.length > 3) {
-					let selectedPageTitle = menuId.substring(3,e.currentTarget.id.length).replace("Footer","Home");
-          let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
-
-					if (_Indx.fnResetPage(selectedPage)) {
-  					if (selectedPageTitle === 'InfoAndContact') {
-              _Indx.fnLoadInfoAndContact(selectedPage);
-  					} else if (selectedPageTitle === 'Home' || selectedPageTitle === 'Footer') {
-              _Indx.fnLoadHomePage();
-  					} else {
-              _Indx.fnStartLoadingPage(selectedPageTitle);
-  					}
-  				}
-        }
-			});
-
-      _Indx.fnRegisterNavGallery = () => {
-        $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
-        _Indx.fnInitNavCarousel();
-        _Indx.fnRegisterNavCarouselEvents();
-      };
-
-    	// register image-click events (Home Page: for opening a particular gallery)
-      _Indx.fnRegisterNavCarouselEvents = () => {
-      	$('img.imgLink').unbind('dblclick');
-
-      	$('img.imgLink').dblclick( function (e) {
-    			let selectedPageTitle = e.currentTarget.id;
-
-          if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()])) {
-            _Indx.fnStartLoadingPage(selectedPageTitle);
-  				}
-  			});
-  		};
-
-			$('.mobileMenu').click( function (e) {
-				let menuId = e.currentTarget.id;
-
-				if (menuId.length > 9) {
-					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
-          let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
-
-					if (_Indx.fnResetPage(selectedPage)) {
-  					if (selectedPageTitle === 'InfoAndContact') {
-              _Indx.fnLoadInfoAndContact();
-  					} else if (selectedPageTitle === 'Home') {
-              _Indx.fnLoadHomePage();
-  					} else {
-              if($('#mobileNav').is(':visible')) {
-                $.showHome = false;
-                $('.menuUpIcon').trigger('click');
-              }
-              _Indx.fnStartLoadingPage(selectedPageTitle);
-  					}
-  				}
-        }
-			});
-
-      // show / hide the mobile menu
-      $('#menuIcon').click( function (e) {
-        $('#menuIcon').hide(300);
-        $('#menuIconUp').show(300);
-        setTimeout( function () {
-          $.currentPage = "MobileNav";
-          $('#mobileNav').slideDown(800);
-
-          // hide or remove other page content
-           if ($('#divInfoAndContact').is(':visible')) {
-             $('#divInfoAndContact').slideUp(300);
-           }
-           if($('#divNavGallery').is(':visible')){
-             $('#divNavGallery').children().slideUp(300);
-           }
-      		 // remove currently selected carousel - if any
-      		 $('#divGallery').slideUp(300).empty();
-        },300 );
-      });
-
-      $('.menuUpIcon').click( function (e) {
-        if($.showHome) {
-          _Indx.fnLoadHomePage();
-        }
-
-        $('#mobileNav').slideUp(800);
-        setTimeout( function () {
-          $('#menuIconUp').hide(300);
-          $('#menuIcon').show(300);
-          $.showHome = true;
-        },800 );
-      });
-		};
-
-    // Update the page content when the popstate event is called.
-    window.addEventListener('popstate', function(event) {
-      let page = event.state;
-      if(page){
-        $.isHistory = true;
-
-				if (_Indx.fnResetPage(page)) {
-					if (page.title.replace(/ /g, "") === 'InfoAndContact') {
-			    	$('#cmdInfoAndContact').addClass('liMenuSel');
-            document.title = "Info + Contact";
-						setTimeout( function () {
-              $('#divInfoAndContact').slideDown(300);
-            },300 );
-					} else if (page.title === 'Home' || page.title === 'Footer') {
-            _Indx.fnLoadHomePage();
-					} else {
-            _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
-					}
-				}
-      }
-    });
-
-		// jQuery widgets //
-
-		_Indx.fnInitNavCarousel = () => {								// init navigation owl carousel on the home page
-      $('#navCarousel').owlCarousel({
-          loop: true,
-          margin: 10,
-          nav: true,
-          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-          navSpeed: 500,
-          dotsSpeed: 500,
-          slideBy: 'page',
-          responsive:{
-              0:{
-                  items:1
-              },
-              500:{
-                  items:2
-              },
-              1000:{
-                  items:3
-              },
-              1500:{
-                  items:4
-              },
-              2000:{
-                  items:5
-              }
-          }
-      })
-		};
-
-		_Indx.fnInitGalleryCarousel = () => {								// init gallery carousel
-      $('#galleryCarousel').owlCarousel({
-          items: 1,
-          loop: true,
-          margin: 10,
-          nav: true,
-          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-          navSpeed: 800,
-          dotsSpeed: 800,
-  	  		stopOnHover : true,
-  		    lazyLoad : true,
-          slideBy: 'page',
-          responsive:{
-              0:{
-                  items:1
-              },
-              500:{
-                  items:2
-              },
-              1000:{
-                  items:3
-              },
-              1500:{
-                  items:4
-              },
-              2000:{
-                  items:5
-              }
-          }
-      })
-		};
-
-    setTimeout( () => {
-      $(window).on('resize', _.debounce(_Indx.fnVerifyMobileNav, 150));
-    },20 )
-
-	 // FUNCTIONS //
-
-   _Indx.fnGetStartUpPage = (url) => {
-     let urlParts = url.split('#');
-     let page = $.pages.home;
-
-     if (urlParts.length === 2) {
-       page = $.pages[urlParts[1].toLowerCase()];
-     }
-     // Update this history event so that the state object contains the data
-     // for the homepage.
-     if (urlParts.length > 0) {
-       $.baseUrl = urlParts[0];
-     }
-     return page;
-   };
-
-   _Indx.fnVerifyMobileNav = () => {
-     if($('#mobileNav').is(':visible')) {
-       $.showHome = false;
-       $('.menuUpIcon').trigger('click');
-     }
-   };
-
-	 // prepare page to load new content
-	 _Indx.fnResetPage = (page) => {
-		 if(page.title === $.currentPage) {
-			 return false; // current selection is already loaded: don't do anything
-		 }
-
-     if ($('#divInfoAndContact').is(':visible')) {
-       $('#divInfoAndContact').slideUp(300);
-     }
-     if($('#divNavGallery').is(':visible')){
-       $('#divNavGallery').children().slideUp(300);
-     }
-     if($('#mobileNav').is(':visible')){
-       $.showHome = false;
-       $('.menuUpIcon').trigger('click');
-     }
-		 // remove currently selected carousel - if any
-		 $('#divGallery').slideUp(300).empty();
-		 // reset all links and menu items
-		 $('.liMenu').removeClass('liMenuSel');
-		 $('.dropbtn').removeClass('menuSel');
-		 // set current page to new page
-		 $.currentPage = page.title;
-
-		 return true;
-	 };
-
-   // load newly selected page
-   _Indx.fnStartLoadingPage = (selectedPageTitle) => {
-     setTimeout( function () { $('#divGallery').slideDown(300); },300 );
-     setTimeout( function () {
-       let selectedPage = $.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()];
-       _Indx.fnLoadPage(selectedPage);
-       if (!$.isHistory) {
-         history.pushState(selectedPage, selectedPage.title);
-       }
-       $.isHistory = false;
-     },600 );
-   };
-
-   // load newly selected page
-   _Indx.fnLoadPage = (page) => {
-     if (page) {
-       document.title = page.title;
-
-       if(page.title === "Home") {
-   		   $('#divNavGallery').children().slideDown(300);
-       } else {
-         $('#divNavGallery').children().slideUp();
-         _Indx.fnBuildPage(page);
-       }
-     }
-   };
-
-    _Indx.fnBuildPage = (page) => {
-      $('#divGallery').prepend(_Indx.fnGetCarousel(page));
-			setTimeout( () => {
-			   _Indx.fnInitGalleryCarousel();
-				 $('#divGallery').children().slideDown(300);
-			},20 );
-		};
-
-    _Indx.fnLoadHomePage = () => {
-      $('#cmdHome').addClass('liMenuSel');
-      setTimeout( function () {
-        document.title = "Home";
-        $('#divNavGallery').children().slideDown(300);
-        if (!$.isHistory) {
-          let page = $.pages.home;
-          history.pushState(page, page.title);
-        }
-        $.isHistory = false;
-      },300 );
-    };
-
-    _Indx.fnLoadInfoAndContact = (page) => {
-      $('#cmdInfoAndContact').addClass('liMenuSel');
-      setTimeout( function () {
-        document.title = "Info + Contact";
-        $('#divInfoAndContact').slideDown(300);
-        if (!$.isHistory) {
-          history.pushState(page, page.title);
-        }
-        $.isHistory = false;
-      },300 );
-    };
-
-	  // get the nav carousel for the home page ; add events
-		_Indx.fnGetNavCarousel = () => {
-			let navGallery = '<div id="divNavCarousel" class="currGallery"><div id="navCarousel" class="owl-carousel owl-theme">';
-			_Indx.fnSetUpMenues($.pages.home);
-
-  			$.each( $.pages.home.data, function ( index, value ) {	  // create html for carousel section
-	  		if(value.length === 2)															      // image name [0], image alt [1]
-			  	navGallery += '<div class="item"><img class="lazyOwl" src="images/Home/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-	  		else if(value.length === 3 && value[2].length > 0)		      // image name [0], image alt [1], image link-to [2]
-	  			navGallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2].replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-			});
-			navGallery += '</div></div>';
-
-			return navGallery;
-	  };
-
-	  // get data for carousel and create the html for this carousel from data ; add events - if any
-		_Indx.fnGetCarousel = (page) => {
-			let gallery = '<div id="divCarousel' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">';
-			_Indx.fnSetUpMenues(page);
-
-			$.each( page.data, function ( index, value ) {	       // create html for carousel section
-	  		if(value.length === 2)															 // image name [0], image alt [1]
-			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "").replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-	  		else if(value.length === 3 && value[2].length > 0)	 // image name [0], image alt [1], image link-to [2]
-	  			gallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2].replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-			});
-			gallery += '</div></div>';
-
-			return gallery;
-	  };
-
-	  // highlight main menu item (top level) --> currently selected ; galleryTypes: "owl", "olOwl"
-		_Indx.fnSetUpMenues = (page) => {
-			//apply menu highlighting
-			if (page.title === "Home") {
-	    	$('.home').addClass('liMenuSel');
-      }
-
-      switch (page.group) {
-		    case 'Portfolios':  									     // Portfolios
-		    	$('#menuPortfolios').addClass('menuSel');
-	        break;
-		    case 'People':  									         // People & Portraits
-		    	$('#menuPeople').addClass('menuSel');
-	        break;
-		    case 'Architecture':  									   // Architecture
-		    	$('#menuArchitecture').addClass('menuSel');
-	        break;
-		    case 'Travel':                       // Travel
-		    	$('#menuTravel').addClass('menuSel');
-	        break;
-		  }
-	  };
-
-	} (window._Indx = window._Indx || {}, jQuery)); // END: Namespace for code on the index.htm page
 
 }); // END: $(document).ready(function()
