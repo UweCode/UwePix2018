@@ -410,24 +410,24 @@ footer div {
 
 @media screen and (min-height: 650px) {
 	#divNavGallery, #divGallery {
-	  padding-top: 40px;
+	  padding-top: 60px;
 	}
 }
 
 @media screen and (min-height: 750px) {
 	#divNavGallery, #divGallery {
-	  padding-top: 60px;
+	  padding-top: 100px;
 	}
 }
 
 @media screen and (min-height: 850px) {
 	#divNavGallery, #divGallery {
-	  padding-top: 80px;
+	  padding-top: 160px;
 	}
 }
 
 @media screen and (min-height: 1000px) {
 	#divNavGallery, #divGallery {
-	  padding-top: 100px;
+	  padding-top: 240px;
 	}
 }
