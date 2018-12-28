@@ -34,7 +34,9 @@ $(document).ready(function() {
 
   	// register menu-click events
   	_Indx.fnRegisterMenuEvents = () => {
-			$('.menu').click( function (e) {
+      $('.menu').off('click');
+
+			$('.menu').on('click', function (e) {
 				let menuId = e.currentTarget.id;
 
 				if (menuId.length > 3) {
@@ -82,7 +84,9 @@ $(document).ready(function() {
   			});
   		};
 
-			$('.mobileMenu').click( function (e) {
+      $('.mobileMenu').off('click');
+
+			$('.mobileMenu').on('click', function (e) {
 				let menuId = e.currentTarget.id;
 
 				if (menuId.length > 9) {
@@ -106,7 +110,9 @@ $(document).ready(function() {
 			});
 
       // show / hide the mobile menu
-      $('#menuIcon').click( function (e) {
+      $('#menuIcon').off('click');
+
+      $('#menuIcon').on('click', function (e) {
         $('#menuIcon').hide(300);
         $('#menuIconUp').show(300);
         setTimeout( function () {
@@ -125,7 +131,9 @@ $(document).ready(function() {
         },300 );
       });
 
-      $('.menuUpIcon').click( function (e) {
+      $('.menuUpIcon').off('click');
+
+      $('.menuUpIcon').on('click', function (e) {
         if($.showHome) {
           _Indx.fnLoadHomePage();
         }
