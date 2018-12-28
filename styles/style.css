@@ -54,7 +54,7 @@ a {
 	display: flex;
 	flex-wrap: wrap;
 	flex: 1;
-	margin-bottom: 10px;
+	margin-bottom: 0;
 }
 #headerTitle {
 	display: flex;
@@ -188,11 +188,11 @@ h4 {
 
 #wrapper{
 	width: 100%;
-	margin-bottom: 26px;
+	margin-bottom: 0;
 }
 
 .nav {
-	margin-bottom: 16px;
+	margin-bottom: 0;
 	position: relative;
 	width: 100%;
 	z-index: 100;
@@ -388,10 +388,46 @@ footer div {
 	footer {
 	  height: 30px;
 	}
+	#divNavGallery, #divGallery {
+	  padding-top: 0;
+	}
 }
 
-@media screen and (min-height: 450px) {
+@media screen and (min-height: 500px) {
 	footer {
 	  height: 40px;
+	}
+	#divNavGallery, #divGallery {
+	  padding-top: 5px;
+	}
+}
+
+@media screen and (min-height: 550px) {
+	#divNavGallery, #divGallery {
+	  padding-top: 30px;
+	}
+}
+
+@media screen and (min-height: 650px) {
+	#divNavGallery, #divGallery {
+	  height: 40px;
+	}
+}
+
+@media screen and (min-height: 750px) {
+	#divNavGallery, #divGallery {
+	  height: 60px;
+	}
+}
+
+@media screen and (min-height: 850px) {
+	#divNavGallery, #divGallery {
+	  height: 80px;
+	}
+}
+
+@media screen and (min-height: 1000px) {
+	#divNavGallery, #divGallery {
+	  height: 100px;
 	}
 }
