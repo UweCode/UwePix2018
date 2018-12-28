@@ -235,7 +235,7 @@ $(document).ready(function() {
 
     setTimeout( () => {
       $(window).on('resize', _.debounce(_Indx.fnVerifyMobileNav, 150));
-    },20 )
+    },20 );
 
 	 // FUNCTIONS //
 
