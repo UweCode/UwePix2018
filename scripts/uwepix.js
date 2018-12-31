@@ -156,7 +156,7 @@ $(document).ready(function() {
         $.isHistory = true;
 
         if($('#overlay').is(':visible')) {
-          $('#overlay').fadeOut(500);
+          _Indx.fnCloseOverlay();
         }
 
 				if (_Indx.fnResetPage(page)) {
@@ -177,23 +177,13 @@ $(document).ready(function() {
 
     // overlay EVENTS
 
-    $('#openOverlay').on('click', function (e) {
-      $('#overlay').fadeIn(500);
-    });
-
     $('#overlayContent').on('click', function (e) {
       $.isOverlayContentClick = true;
     });
 
     $('#overlay').on('click', function (e) {
       if(!$.isOverlayContentClick) {
-        $.currentPage = "Home";
-        page.title = "Home";
-  		  _Indx.fnLoadPage(page);
-        $('#overlay').fadeOut(500);
-        setTimeout( () => {
-          $('#overlayContent').empty();
-        }, 300);
+        _Indx.fnCloseOverlay();
       } else {
         $.isOverlayContentClick = false;
       }
@@ -286,6 +276,20 @@ $(document).ready(function() {
 
 	 // FUNCTIONS //
 
+   _Indx.fnIsLargeScreen = () => {
+     return (window.innerHeight >= 590 && window.innerWidth >= 920);
+   }
+
+   _Indx.fnCloseOverlay = () => {
+     $.currentPage = "Home";
+     page.title = "Home";
+     _Indx.fnLoadPage(page);
+     $('#overlay').fadeOut(500);
+     setTimeout( () => {
+       $('#overlayContent').empty();
+     }, 300);
+   }
+
    _Indx.fnSetNavIsDrag = () => {
      $.isNavDrag = true;
    }
@@ -370,7 +374,7 @@ $(document).ready(function() {
       let gallery = _Indx.fnGetCarousel(page);
 
       // add gallery wrapper depending on type
-      if($.galleryHasLargeImages){
+      if($.galleryHasLargeImages && _Indx.fnIsLargeScreen()){
         gallery = '<div id="divOverlayCarousel_ol_' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="overlayCarousel" class="owl-carousel owl-theme">' + gallery + '</div></div>';
         $('#overlayContent').prepend(gallery);
         setTimeout( () => {
