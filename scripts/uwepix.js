@@ -9,6 +9,9 @@ $(document).ready(function() {
   $.showHome = true;
   $.isHistory = false;
   $.isNavDrag = false;
+  $.isLargeScreen = false;
+  $.galleryHasLargeImages = false;
+  $.isOverlayContentClick = false;
   $.baseUrl = "";
 
 	// START-UP //
@@ -18,6 +21,8 @@ $(document).ready(function() {
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
     _Indx.fnRegisterNavGallery();
+
+    $.isLargeScreen = _Indx.fnIsLargeScreen();
 
     let page = _Indx.fnGetStartUpPage(url);
     $.currentPage = page.title;
@@ -43,7 +48,7 @@ $(document).ready(function() {
 					let selectedPageTitle = menuId.substring(3,e.currentTarget.id.length).replace("Footer","Home");
           let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
 
-					if (_Indx.fnResetPage(selectedPage)) {
+					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
               _Indx.fnLoadInfoAndContact(selectedPage);
   					} else if (selectedPageTitle === 'Home' || selectedPageTitle === 'Footer') {
@@ -75,7 +80,7 @@ $(document).ready(function() {
     			let selectedPageTitle = e.currentTarget.id;
 
           if(!$.isNavDrag) {
-            if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()])) {
+            if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()], false)) {
               _Indx.fnStartLoadingPage(selectedPageTitle);
     				}
           } else {
@@ -93,7 +98,7 @@ $(document).ready(function() {
 					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
           let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
 
-					if (_Indx.fnResetPage(selectedPage)) {
+					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
               _Indx.fnLoadInfoAndContact();
   					} else if (selectedPageTitle === 'Home') {
@@ -115,7 +120,7 @@ $(document).ready(function() {
       $('#menuIcon').on('click', function (e) {
         $('#menuIcon').hide(300);
         $('#menuIconUp').show(300);
-        setTimeout( function () {
+        setTimeout( () => {
           $.currentPage = "MobileNav";
           $('#mobileNav').slideDown(800);
 
@@ -139,7 +144,7 @@ $(document).ready(function() {
         }
 
         $('#mobileNav').slideUp(800);
-        setTimeout( function () {
+        setTimeout( () => {
           $('#menuIconUp').hide(300);
           $('#menuIcon').show(300);
           $.showHome = true;
@@ -153,11 +158,15 @@ $(document).ready(function() {
       if(page){
         $.isHistory = true;
 
-				if (_Indx.fnResetPage(page)) {
+        if($('#overlay').is(':visible')) {
+          _Indx.fnCloseOverlay();
+        }
+
+				if (_Indx.fnResetPage(page, false)) {
 					if (page.title.replace(/ /g, "") === 'InfoAndContact') {
 			    	$('#cmdInfoAndContact').addClass('liMenuSel');
             document.title = "Info + Contact";
-						setTimeout( function () {
+						setTimeout( () => {
               $('#divInfoAndContact').slideDown(300);
             },300 );
 					} else if (page.title === 'Home' || page.title === 'Footer') {
@@ -166,6 +175,22 @@ $(document).ready(function() {
             _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
 					}
 				}
+      }
+    });
+
+    // overlay EVENTS
+
+    $('#overlayContent').on('click', function (e) {
+      $.isOverlayContentClick = true;
+    });
+
+    $('#overlay').on('click', function (e) {
+      if($.isOverlayContentClick) {
+        $.isOverlayContentClick = false;
+      } else {
+        $.currentPage = "Home";
+        page.title = "Home";
+        _Indx.fnCloseOverlay();
       }
     });
 
@@ -203,41 +228,95 @@ $(document).ready(function() {
 
 		_Indx.fnInitGalleryCarousel = () => {								// init gallery carousel
       $('#galleryCarousel').owlCarousel({
-          items: 1,
-          loop: true,
-          margin: 10,
-          nav: true,
-          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-          navSpeed: 800,
-          dotsSpeed: 800,
-  	  		stopOnHover : true,
-  		    lazyLoad : true,
-          slideBy: 'page',
-          responsive:{
-              0:{
-                  items:1
-              },
-              500:{
-                  items:2
-              },
-              1000:{
-                  items:3
-              },
-              1500:{
-                  items:4
-              },
-              2000:{
-                  items:5
-              }
+        items: 1,
+        loop: true,
+        margin: 10,
+        nav: true,
+        navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+        navSpeed: 800,
+        dotsSpeed: 800,
+	  		stopOnHover : true,
+		    lazyLoad : true,
+        slideBy: 'page',
+        responsive:{
+          0:{
+              items:1
+          },
+          500:{
+              items:2
+          },
+          1000:{
+              items:3
+          },
+          1500:{
+              items:4
+          },
+          2000:{
+              items:5
           }
+        }
+      })
+		};
+
+		_Indx.fnInitOverlayCarousel = () => {								// init overlay gallery carousel
+      $('#overlay').fadeIn(500);
+
+      $('#overlayCarousel').owlCarousel({
+        items: 1,
+        loop: true,
+        margin: 10,
+        nav: true,
+        navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+        navSpeed: 800,
+        dotsSpeed: 800,
+	  		stopOnHover : true,
+		    lazyLoad : true,
+        slideBy: 'page'
       })
 		};
 
     setTimeout( () => {
-      $(window).on('resize', _.debounce(_Indx.fnVerifyMobileNav, 150));
+      $(window).on('resize', _.debounce(_Indx.fnAdjustToScreenSizeChange, 150));
     },20 );
 
-	 // FUNCTIONS //
+	  // FUNCTIONS //
+
+    _Indx.fnAdjustToScreenSizeChange = () => {
+      _Indx.fnVerifyMobileNav();
+      _Indx.fnVerifyIsLargeScreen();
+      $.isLargeScreen = _Indx.fnIsLargeScreen();
+    }
+
+    _Indx.fnIsLargeScreen = () => {
+      return (window.innerHeight >= 590 && window.innerWidth >= 920);
+    }
+
+    _Indx.fnVerifyIsLargeScreen = () => {
+      if ($.galleryHasLargeImages && $.isLargeScreen != _Indx.fnIsLargeScreen()) {
+        if ($.isLargeScreen) { // change from large screen to small screen
+           _Indx.fnCloseOverlay();
+        }
+        $.isHistory = true;
+        let selectedPage = $.pages[$.currentPage.toLowerCase()];
+				if (_Indx.fnResetPage(selectedPage, true)) {
+					if ($.currentPage === 'InfoAndContact') {
+            _Indx.fnLoadInfoAndContact($.currentPage);
+					} else if ($.currentPage === 'Home' || $.currentPage === 'Footer') {
+            _Indx.fnLoadHomePage();
+					} else {
+            _Indx.fnStartLoadingPage($.currentPage);
+					}
+        }
+      }
+    }
+
+    _Indx.fnCloseOverlay = () => {
+     _Indx.fnLoadPage(page);
+     $('#overlay').fadeOut(500);
+     setTimeout( () => {
+       $('#overlayContent').empty();
+     }, 300);
+   }
 
    _Indx.fnSetNavIsDrag = () => {
      $.isNavDrag = true;
@@ -266,8 +345,8 @@ $(document).ready(function() {
    };
 
 	 // prepare page to load new content
-	 _Indx.fnResetPage = (page) => {
-		 if(page.title === $.currentPage) {
+	 _Indx.fnResetPage = (page, forceReset) => {
+		 if(!forceReset && page.title === $.currentPage) {
 			 return false; // current selection is already loaded: don't do anything
 		 }
 
@@ -320,16 +399,28 @@ $(document).ready(function() {
    };
 
     _Indx.fnBuildPage = (page) => {
-      $('#divGallery').prepend(_Indx.fnGetCarousel(page));
-			setTimeout( () => {
-			   _Indx.fnInitGalleryCarousel();
-				 $('#divGallery').children().slideDown(300);
-			},20 );
+      let gallery = _Indx.fnGetCarousel(page);
+
+      // add gallery wrapper depending on type
+      if($.galleryHasLargeImages && _Indx.fnIsLargeScreen()){
+        gallery = '<div id="divOverlayCarousel_ol_' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="overlayCarousel" class="owl-carousel owl-theme">' + gallery + '</div></div>';
+        $('#overlayContent').prepend(gallery);
+        setTimeout( () => {
+          _Indx.fnInitOverlayCarousel();
+        },20 );
+      } else {
+        gallery = '<div id="divCarousel' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">' + gallery + '</div></div>';
+        $('#divGallery').prepend(gallery);
+        setTimeout( () => {
+  			     _Indx.fnInitGalleryCarousel();
+             $('#divGallery').children().slideDown(300);
+        },20 );
+      }
 		};
 
     _Indx.fnLoadHomePage = () => {
       $('#cmdHome').addClass('liMenuSel');
-      setTimeout( function () {
+      setTimeout( () => {
         document.title = "Home";
         $('#divNavGallery').children().slideDown(300);
         if (!$.isHistory) {
@@ -342,7 +433,7 @@ $(document).ready(function() {
 
     _Indx.fnLoadInfoAndContact = (page) => {
       $('#cmdInfoAndContact').addClass('liMenuSel');
-      setTimeout( function () {
+      setTimeout( () => {
         document.title = "Info + Contact";
         $('#divInfoAndContact').slideDown(300);
         if (!$.isHistory) {
@@ -354,32 +445,33 @@ $(document).ready(function() {
 
 	  // get the nav carousel for the home page ; add events
 		_Indx.fnGetNavCarousel = () => {
+      $.galleryHasLargeImages = false;
 			let navGallery = '<div id="divNavCarousel" class="currGallery"><div id="navCarousel" class="owl-carousel owl-theme">';
 			_Indx.fnSetUpMenues($.pages.home);
 
-  			$.each( $.pages.home.data, function ( index, value ) {	  // create html for carousel section
-	  		if(value.length === 2)															      // image name [0], image alt [1]
-			  	navGallery += '<div class="item"><img class="lazyOwl" src="images/Home/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-	  		else if(value.length === 3 && value[2].length > 0)		      // image name [0], image alt [1], image link-to [2]
-	  			navGallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2].replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+  		$.each( $.pages.home.data, function ( index, value ) {	  // create html for carousel section
+	  		// image name [0], image alt [1], image link-to [2]
+	  	    navGallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2].replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
 			});
 			navGallery += '</div></div>';
 
 			return navGallery;
 	  };
 
-	  // get data for carousel and create the html for this carousel from data ; add events - if any
+	  // get data for the carousel or the overlay carousel and create the html for this carousel from data
 		_Indx.fnGetCarousel = (page) => {
-			let gallery = '<div id="divCarousel' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">';
+			let gallery = '';
 			_Indx.fnSetUpMenues(page);
 
-			$.each( page.data, function ( index, value ) {	       // create html for carousel section
-	  		if(value.length === 2)															 // image name [0], image alt [1]
-			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "").replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-	  		else if(value.length === 3 && value[2].length > 0)	 // image name [0], image alt [1], image link-to [2]
-	  			gallery += '<div class="item"><img id="' + value[2] + '" class="lazyOwl imgLink hoverPointer" src="images/' + value[2].replace("+","") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+			$.each( page.data, function ( index, value ) {           // create html for carousel section
+	  		if(value.length === 2) {														   // image name [0], image alt [1]
+          if (index === 0) $.galleryHasLargeImages = false;
+			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+	  		} else if(value.length === 3 && value[2].length > 0) { // image name [0], image alt [1], image link-to [2]
+          if (index === 0) $.galleryHasLargeImages = true;
+	  			gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "") + '/' + value[2] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+        }
 			});
-			gallery += '</div></div>';
 
 			return gallery;
 	  };
@@ -548,14 +640,14 @@ $(document).ready(function() {
     portraits: {
       title: "Portraits",
       data: [
-        ['Por201.jpg','Ricci'],
-        ['Por202.jpg','Heather'],
-        ['Por203.jpg','Adam'],
-        ['Por208.jpg',''],
-        ['Por205.jpg','Jasper'],
-        ['Por206.jpg','Joe'],
-        ['Por207.jpg','Juergen'],
-        ['Por204.jpg','Fiaker Driver, Vienna, 2008']
+        ['Por201.jpg','Ricci','ol_Por201.jpg'],
+        ['Por202.jpg','Heather','ol_Por202.jpg'],
+        ['Por203.jpg','Adam','ol_Por203.jpg'],
+        ['Por208.jpg','','ol_Por208.jpg'],
+        ['Por205.jpg','Jasper','ol_Por205.jpg'],
+        ['Por206.jpg','Joe','ol_Por206.jpg'],
+        ['Por207.jpg','Juergen','ol_Por207.jpg'],
+        ['Por204.jpg','Fiaker Driver, Vienna, 2008','ol_Por204.jpg']
       ],
       group: "People"
     },
