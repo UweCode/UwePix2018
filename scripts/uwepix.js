@@ -9,6 +9,7 @@ $(document).ready(function() {
   $.showHome = true;
   $.isHistory = false;
   $.isNavDrag = false;
+  $.isLargeScreen = false;
   $.galleryHasLargeImages = false;
   $.isOverlayContentClick = false;
   $.baseUrl = "";
@@ -20,6 +21,8 @@ $(document).ready(function() {
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
     _Indx.fnRegisterNavGallery();
+
+    $.isLargeScreen = _Indx.fnIsLargeScreen();
 
     let page = _Indx.fnGetStartUpPage(url);
     $.currentPage = page.title;
@@ -45,7 +48,7 @@ $(document).ready(function() {
 					let selectedPageTitle = menuId.substring(3,e.currentTarget.id.length).replace("Footer","Home");
           let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
 
-					if (_Indx.fnResetPage(selectedPage)) {
+					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
               _Indx.fnLoadInfoAndContact(selectedPage);
   					} else if (selectedPageTitle === 'Home' || selectedPageTitle === 'Footer') {
@@ -77,7 +80,7 @@ $(document).ready(function() {
     			let selectedPageTitle = e.currentTarget.id;
 
           if(!$.isNavDrag) {
-            if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()])) {
+            if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()], false)) {
               _Indx.fnStartLoadingPage(selectedPageTitle);
     				}
           } else {
@@ -95,7 +98,7 @@ $(document).ready(function() {
 					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
           let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
 
-					if (_Indx.fnResetPage(selectedPage)) {
+					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
               _Indx.fnLoadInfoAndContact();
   					} else if (selectedPageTitle === 'Home') {
@@ -159,7 +162,7 @@ $(document).ready(function() {
           _Indx.fnCloseOverlay();
         }
 
-				if (_Indx.fnResetPage(page)) {
+				if (_Indx.fnResetPage(page, false)) {
 					if (page.title.replace(/ /g, "") === 'InfoAndContact') {
 			    	$('#cmdInfoAndContact').addClass('liMenuSel');
             document.title = "Info + Contact";
@@ -182,10 +185,12 @@ $(document).ready(function() {
     });
 
     $('#overlay').on('click', function (e) {
-      if(!$.isOverlayContentClick) {
-        _Indx.fnCloseOverlay();
-      } else {
+      if($.isOverlayContentClick) {
         $.isOverlayContentClick = false;
+      } else {
+        $.currentPage = "Home";
+        page.title = "Home";
+        _Indx.fnCloseOverlay();
       }
     });
 
@@ -223,33 +228,33 @@ $(document).ready(function() {
 
 		_Indx.fnInitGalleryCarousel = () => {								// init gallery carousel
       $('#galleryCarousel').owlCarousel({
-          items: 1,
-          loop: true,
-          margin: 10,
-          nav: true,
-          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-          navSpeed: 800,
-          dotsSpeed: 800,
-  	  		stopOnHover : true,
-  		    lazyLoad : true,
-          slideBy: 'page',
-          responsive:{
-              0:{
-                  items:1
-              },
-              500:{
-                  items:2
-              },
-              1000:{
-                  items:3
-              },
-              1500:{
-                  items:4
-              },
-              2000:{
-                  items:5
-              }
+        items: 1,
+        loop: true,
+        margin: 10,
+        nav: true,
+        navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+        navSpeed: 800,
+        dotsSpeed: 800,
+	  		stopOnHover : true,
+		    lazyLoad : true,
+        slideBy: 'page',
+        responsive:{
+          0:{
+              items:1
+          },
+          500:{
+              items:2
+          },
+          1000:{
+              items:3
+          },
+          1500:{
+              items:4
+          },
+          2000:{
+              items:5
           }
+        }
       })
 		};
 
@@ -257,32 +262,55 @@ $(document).ready(function() {
       $('#overlay').fadeIn(500);
 
       $('#overlayCarousel').owlCarousel({
-          items: 1,
-          loop: true,
-          margin: 10,
-          nav: true,
-          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-          navSpeed: 800,
-          dotsSpeed: 800,
-  	  		stopOnHover : true,
-  		    lazyLoad : true,
-          slideBy: 'page'
+        items: 1,
+        loop: true,
+        margin: 10,
+        nav: true,
+        navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+        navSpeed: 800,
+        dotsSpeed: 800,
+	  		stopOnHover : true,
+		    lazyLoad : true,
+        slideBy: 'page'
       })
 		};
 
     setTimeout( () => {
-      $(window).on('resize', _.debounce(_Indx.fnVerifyMobileNav, 150));
+      $(window).on('resize', _.debounce(_Indx.fnAdjustToScreenSizeChange, 150));
     },20 );
 
-	 // FUNCTIONS //
+	  // FUNCTIONS //
 
-   _Indx.fnIsLargeScreen = () => {
-     return (window.innerHeight >= 590 && window.innerWidth >= 920);
-   }
+    _Indx.fnAdjustToScreenSizeChange = () => {
+      _Indx.fnVerifyMobileNav();
+      _Indx.fnVerifyIsLargeScreen();
+      $.isLargeScreen = _Indx.fnIsLargeScreen();
+    }
 
-   _Indx.fnCloseOverlay = () => {
-     $.currentPage = "Home";
-     page.title = "Home";
+    _Indx.fnIsLargeScreen = () => {
+      return (window.innerHeight >= 590 && window.innerWidth >= 920);
+    }
+
+    _Indx.fnVerifyIsLargeScreen = () => {
+      if ($.galleryHasLargeImages && $.isLargeScreen != _Indx.fnIsLargeScreen()) {
+        if ($.isLargeScreen) { // change from large screen to small screen
+           _Indx.fnCloseOverlay();
+        }
+        $.isHistory = true;
+        let selectedPage = $.pages[$.currentPage.toLowerCase()];
+				if (_Indx.fnResetPage(selectedPage, true)) {
+					if ($.currentPage === 'InfoAndContact') {
+            _Indx.fnLoadInfoAndContact($.currentPage);
+					} else if ($.currentPage === 'Home' || $.currentPage === 'Footer') {
+            _Indx.fnLoadHomePage();
+					} else {
+            _Indx.fnStartLoadingPage($.currentPage);
+					}
+        }
+      }
+    }
+
+    _Indx.fnCloseOverlay = () => {
      _Indx.fnLoadPage(page);
      $('#overlay').fadeOut(500);
      setTimeout( () => {
@@ -317,8 +345,8 @@ $(document).ready(function() {
    };
 
 	 // prepare page to load new content
-	 _Indx.fnResetPage = (page) => {
-		 if(page.title === $.currentPage) {
+	 _Indx.fnResetPage = (page, forceReset) => {
+		 if(!forceReset && page.title === $.currentPage) {
 			 return false; // current selection is already loaded: don't do anything
 		 }
 
@@ -379,7 +407,6 @@ $(document).ready(function() {
         $('#overlayContent').prepend(gallery);
         setTimeout( () => {
           _Indx.fnInitOverlayCarousel();
-          $.galleryHasLargeImages = false;
         },20 );
       } else {
         gallery = '<div id="divCarousel' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">' + gallery + '</div></div>';
@@ -418,6 +445,7 @@ $(document).ready(function() {
 
 	  // get the nav carousel for the home page ; add events
 		_Indx.fnGetNavCarousel = () => {
+      $.galleryHasLargeImages = false;
 			let navGallery = '<div id="divNavCarousel" class="currGallery"><div id="navCarousel" class="owl-carousel owl-theme">';
 			_Indx.fnSetUpMenues($.pages.home);
 
@@ -435,10 +463,11 @@ $(document).ready(function() {
 			let gallery = '';
 			_Indx.fnSetUpMenues(page);
 
-			$.each( page.data, function ( index, value ) {	       // create html for carousel section
-	  		if(value.length === 2)															 // image name [0], image alt [1]
+			$.each( page.data, function ( index, value ) {           // create html for carousel section
+	  		if(value.length === 2) {														   // image name [0], image alt [1]
+          if (index === 0) $.galleryHasLargeImages = false;
 			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
-	  		else if(value.length === 3 && value[2].length > 0) { // image name [0], image alt [1], image link-to [2]
+	  		} else if(value.length === 3 && value[2].length > 0) { // image name [0], image alt [1], image link-to [2]
           if (index === 0) $.galleryHasLargeImages = true;
 	  			gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "") + '/' + value[2] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
         }

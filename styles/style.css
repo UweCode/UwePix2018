@@ -106,7 +106,6 @@ a {
 	max-width: 40px;
 	position: relative;
 	top: -9px;
-	left: -18px;
 }
 #menuIcon:hover, .menuUpIcon:hover {
 	cursor: pointer;
@@ -175,9 +174,6 @@ li.liTop {
 #mobileNav {
 	display: none;
 	margin-bottom: 30px;
-}
-#mobileHeaderMenu {
-	margin-left: 16px;
 }
 #ulMobileMenu {
 	display: flex;
