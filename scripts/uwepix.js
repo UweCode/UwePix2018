@@ -194,6 +194,12 @@ $(document).ready(function() {
       }
     });
 
+    $('#closePng').on('click', function (e) {
+      $.currentPage = "Home";
+      page.title = "Home";
+      _Indx.fnCloseOverlay();
+    });
+
 		// jQuery widgets //
 
 		_Indx.fnInitNavCarousel = () => {								// init navigation owl carousel on the home page
@@ -315,6 +321,7 @@ $(document).ready(function() {
      $('#overlay').fadeOut(500);
      setTimeout( () => {
        $('#overlayContent').empty();
+       $('#overlayContent').append('<img id="closePng" src = "images/Close.png" />');
      }, 300);
    }
 
@@ -466,10 +473,10 @@ $(document).ready(function() {
 			$.each( page.data, function ( index, value ) {           // create html for carousel section
 	  		if(value.length === 2) {														   // image name [0], image alt [1]
           if (index === 0) $.galleryHasLargeImages = false;
-			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+			  	gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "").replace("+", "") + '/' + value[0] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
 	  		} else if(value.length === 3 && value[2].length > 0) { // image name [0], image alt [1], image link-to [2]
           if (index === 0) $.galleryHasLargeImages = true;
-	  			gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "") + '/' + value[2] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
+	  			gallery += '<div class="item"><img class="lazyOwl" src="images/' + page.title.replace(/ /g, "").replace("+", "") + '/' + value[2] + '" alt="' + value[1] + '" title="' + value[1] + '"></div>';
         }
 			});
 
