@@ -194,11 +194,17 @@ $(document).ready(function() {
       }
     });
 
-    $('#closePng').on('click', function (e) {
-      $.currentPage = "Home";
-      page.title = "Home";
-      _Indx.fnCloseOverlay();
-    });
+    _Indx.fnInitCmdClose = () => {
+      if ($('#closePng').length) {
+        $('#closePng').off();
+      }
+
+      $('#closePng').on('click', function (e) {
+        $.currentPage = "Home";
+        page.title = "Home";
+        _Indx.fnCloseOverlay();
+      });
+    }
 
 		// jQuery widgets //
 
@@ -414,6 +420,7 @@ $(document).ready(function() {
         $('#overlayContent').prepend(gallery);
         setTimeout( () => {
           _Indx.fnInitOverlayCarousel();
+          _Indx.fnInitCmdClose();
         },20 );
       } else {
         gallery = '<div id="divCarousel' + page.title.replace(/ /g, "") + '" class="currGallery"><div id="galleryCarousel" class="owl-carousel owl-theme">' + gallery + '</div></div>';
@@ -585,44 +592,44 @@ $(document).ready(function() {
     },
     winternightinneportland: {
       title: "Winternight In NE Portland",
-      data: [['WinterInPdx_01.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_35.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_02.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_03.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_13.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_04.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_05.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_06.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_11.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_34.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_07.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_12.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_15.jpg','A Winternight in NE Portland, Dec. 28th, 2008',],
-        ['WinterInPdx_16.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_32.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_17.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_14.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_19.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_18.jpg','A Winternight in NE Portland, Dec. 28th, 2008'],
-        ['WinterInPdx_31.jpg','A Winternight in NE Portland, Dec. 28th, 2008']
+      data: [
+        ['WinterInPdx_01.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_01.jpg'],
+        ['WinterInPdx_35.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_35.jpg'],
+        ['WinterInPdx_02.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_02.jpg'],
+        ['WinterInPdx_13.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_13.jpg'],
+        ['WinterInPdx_04.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_04.jpg'],
+        ['WinterInPdx_05.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_05.jpg'],
+        ['WinterInPdx_06.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_06.jpg'],
+        ['WinterInPdx_11.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_11.jpg'],
+        ['WinterInPdx_34.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_34.jpg'],
+        ['WinterInPdx_07.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_07.jpg'],
+        ['WinterInPdx_12.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_12.jpg'],
+        ['WinterInPdx_15.jpg','A Winternight in NE Portland, Dec. 28th, 2008',,'ol_WinterInPdx_15.jpg'],
+        ['WinterInPdx_16.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_16.jpg'],
+        ['WinterInPdx_32.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_32.jpg'],
+        ['WinterInPdx_17.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_17.jpg'],
+        ['WinterInPdx_14.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_14.jpg'],
+        ['WinterInPdx_19.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_19.jpg'],
+        ['WinterInPdx_18.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_18.jpg'],
+        ['WinterInPdx_31.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_31.jpg']
       ],
       group: "Portfolios"
     },
     wallsandpoles: {
       title: "Walls And Poles",
       data: [
-        ['WallsPoles_01.jpg','Walls & Utility Poles - 1'],
-        ['WallsPoles_02.jpg','Walls & Utility Poles - 2'],
-        ['WallsPoles_10.jpg','Walls & Utility Poles - 10'],
-        ['WallsPoles_09.jpg','Walls & Utility Poles - 9'],
-        ['WallsPoles_03.jpg','Walls & Utility Poles - 3'],
-        ['WallsPoles_06.jpg','Walls & Utility Poles - 6'],
-        ['WallsPoles_07.jpg','Walls & Utility Poles - 7'],
-        ['WallsPoles_08.jpg','Walls & Utility Poles - 8'],
-        ['WallsPoles_04.jpg','Walls & Utility Poles - 4'],
-        ['WallsPoles_05.jpg','Walls & Utility Poles - 5'],
-        ['WallsPoles_12.jpg','Walls & Utility Poles - 12'],
-        ['WallsPoles_11.jpg','Walls & Utility Poles - 11']
+        ['WallsPoles_01.jpg','Abstracts on Walls & Utility Poles - 1','ol_WallsPoles_01.jpg'],
+        ['WallsPoles_02.jpg','Abstracts on Walls & Utility Poles - 2','ol_WallsPoles_02.jpg'],
+        ['WallsPoles_10.jpg','Abstracts on Walls & Utility Poles - 10','ol_WallsPoles_10.jpg'],
+        ['WallsPoles_09.jpg','Abstracts on Walls & Utility Poles - 9','ol_WallsPoles_09.jpg'],
+        ['WallsPoles_03.jpg','Abstracts on Walls & Utility Poles - 3','ol_WallsPoles_03.jpg'],
+        ['WallsPoles_06.jpg','Abstracts on Walls & Utility Poles - 6','ol_WallsPoles_06.jpg'],
+        ['WallsPoles_07.jpg','Abstracts on Walls & Utility Poles - 7','ol_WallsPoles_07.jpg'],
+        ['WallsPoles_08.jpg','Abstracts on Walls & Utility Poles - 8','ol_WallsPoles_08.jpg'],
+        ['WallsPoles_04.jpg','Abstracts on Walls & Utility Poles - 4','ol_WallsPoles_04.jpg'],
+        ['WallsPoles_05.jpg','Abstracts on Walls & Utility Poles - 5','ol_WallsPoles_05.jpg'],
+        ['WallsPoles_12.jpg','Abstracts on Walls & Utility Poles - 12','ol_WallsPoles_12.jpg'],
+        ['WallsPoles_11.jpg','Abstracts on Walls & Utility Poles - 11','ol_WallsPoles_11.jpg']
       ],
       group: "Portfolios"
     },
@@ -661,28 +668,28 @@ $(document).ready(function() {
     moviedirectors: {
       title: "Movie Directors",
       data: [
-        ['MovieDirectors01.jpg','Andrew Dominik, Park City, UT 2001'],
-        ['MovieDirectors02.jpg','Jan Hrebejk, Park City, UT 2001'],
-        ['MovieDirectors03.jpg','Sandra Werneck, Park City, UT 2001'],
-        ['MovieDirectors04.jpg','Nabil Ayouch, Park City, UT 2001'],
-        ['MovieDirectors05.jpg','Kim Kiduk, Park City, UT 2001'],
-        ['MovieDirectors06.jpg','Laura Mana, Park City, UT 2001'],
-        ['MovieDirectors07.jpg','Jean-Pierre Sinapi, Park City, UT 2001'],
-        ['MovieDirectors08.jpg','Denis Villeneuve, Park City, UT 2001'],
-        ['MovieDirectors09.jpg','John Cameron Mitchell, Park City, UT 2001'],
-        ['MovieDirectors10.jpg','Jamie Thraves, Park City, UT 2001'],
-        ['MovieDirectors11.jpg','Lukas Moodysson, Park City, UT 2001'],
-        ['MovieDirectors12.jpg','Henrique Goldman, Park City, UT 2001'],
-        ['MovieDirectors13.jpg','Fridrik Thor Fridriksson, Park City, UT 2001'],
-        ['MovieDirectors14.jpg','Eduardo Winspeare, Park City, UT 2001'],
-        ['MovieDirectors15.jpg','Lorenza Manrique, Park City, UT 2001'],
-        ['MovieDirectors16.jpg','Bill Eagles, Park City, UT 2001'],
-        ['MovieDirectors17.jpg','Baltasar Kormakur, Park City, UT 2001'],
-        ['MovieDirectors18.jpg','Baltasar Kormakur, Park City, UT 2001'],
-        ['MovieDirectors19.jpg','Yoshiyasu Fujita, Park City, UT 2001'],
-        ['MovieDirectors20.jpg','Andrucha Waddington, Park City, UT 2001'],
-        ['MovieDirectors21.jpg','Barbet Schroeder, Park City, UT 2001'],
-        ['MovieDirectors22.jpg','Javier Corcuera, Park City, UT 2001']
+        ['MovieDirectors01.jpg','Andrew Dominik, Park City, UT 2001','ol_MovieDirectors_01.jpg'],
+        ['MovieDirectors02.jpg','Jan Hrebejk, Park City, UT 2001','ol_MovieDirectors_02.jpg'],
+        ['MovieDirectors03.jpg','Sandra Werneck, Park City, UT 2001','ol_MovieDirectors_03.jpg'],
+        ['MovieDirectors04.jpg','Nabil Ayouch, Park City, UT 2001','ol_MovieDirectors_04.jpg'],
+        ['MovieDirectors05.jpg','Kim Kiduk, Park City, UT 2001','ol_MovieDirectors_05.jpg'],
+        ['MovieDirectors06.jpg','Laura Mana, Park City, UT 2001','ol_MovieDirectors_06.jpg'],
+        ['MovieDirectors07.jpg','Jean-Pierre Sinapi, Park City, UT 2001','ol_MovieDirectors_07.jpg'],
+        ['MovieDirectors08.jpg','Denis Villeneuve, Park City, UT 2001','ol_MovieDirectors_08.jpg'],
+        ['MovieDirectors09.jpg','John Cameron Mitchell, Park City, UT 2001','ol_MovieDirectors_09.jpg'],
+        ['MovieDirectors10.jpg','Jamie Thraves, Park City, UT 2001','ol_MovieDirectors_10.jpg'],
+        ['MovieDirectors11.jpg','Lukas Moodysson, Park City, UT 2001','ol_MovieDirectors_11.jpg'],
+        ['MovieDirectors12.jpg','Henrique Goldman, Park City, UT 2001','ol_MovieDirectors_12.jpg'],
+        ['MovieDirectors13.jpg','Fridrik Thor Fridriksson, Park City, UT 2001','ol_MovieDirectors_13.jpg'],
+        ['MovieDirectors14.jpg','Eduardo Winspeare, Park City, UT 2001','ol_MovieDirectors_14.jpg'],
+        ['MovieDirectors15.jpg','Lorenza Manrique, Park City, UT 2001','ol_MovieDirectors_15.jpg'],
+        ['MovieDirectors16.jpg','Bill Eagles, Park City, UT 2001','ol_MovieDirectors_16.jpg'],
+        ['MovieDirectors17.jpg','Baltasar Kormakur, Park City, UT 2001','ol_MovieDirectors_17.jpg'],
+        ['MovieDirectors18.jpg','Baltasar Kormakur, Park City, UT 2001','ol_MovieDirectors_18.jpg'],
+        ['MovieDirectors19.jpg','Yoshiyasu Fujita, Park City, UT 2001','ol_MovieDirectors_19.jpg'],
+        ['MovieDirectors20.jpg','Andrucha Waddington, Park City, UT 2001','ol_MovieDirectors_20.jpg'],
+        ['MovieDirectors21.jpg','Barbet Schroeder, Park City, UT 2001','ol_MovieDirectors_21.jpg'],
+        ['MovieDirectors22.jpg','Javier Corcuera, Park City, UT 2001','ol_MovieDirectors_22.jpg']
       ],
       group: "People"
     },
@@ -747,21 +754,21 @@ $(document).ready(function() {
     paintedhills: {
       title: "Painted Hills",
       data: [
-        ['PaintedHills02.jpg','PaintedHills, OR, 2015 - 2'],
-        ['PaintedHills04.jpg','PaintedHills, OR, 2015 - 4'],
-        ['PaintedHills03.jpg','PaintedHills, OR, 2015 - 3'],
-        ['PaintedHills05.jpg','PaintedHills, OR, 2015 - 5'],
-        ['PaintedHills06.jpg','PaintedHills, OR, 2015 - 6'],
-        ['PaintedHills17.jpg','PaintedHills, OR, 2015 - 17'],
-        ['PaintedHills15.jpg','PaintedHills, OR, 2015 - 15'],
-        ['PaintedHills13.jpg','PaintedHills, OR, 2015 - 13'],
-        ['PaintedHills18.jpg','PaintedHills, OR, 2015 - 18'],
-        ['PaintedHills11.jpg','PaintedHills, OR, 2015 - 11'],
-        ['PaintedHills20.jpg','PaintedHills, OR, 2015 - 20'],
-        ['PaintedHills10.jpg','PaintedHills, OR, 2015 - 10'],
-        ['PaintedHills08.jpg','PaintedHills, OR, 2015 - 8'],
-        ['PaintedHills21.jpg','PaintedHills, OR, 2015 - 21'],
-        ['PaintedHills12.jpg','PaintedHills, OR, 2015 - 12']
+        ['PaintedHills02.jpg','PaintedHills, OR, 2015 - 2','ol_PaintedHills_02.jpg'],
+        ['PaintedHills04.jpg','PaintedHills, OR, 2015 - 4','ol_PaintedHills_04.jpg'],
+        ['PaintedHills03.jpg','PaintedHills, OR, 2015 - 3','ol_PaintedHills_03.jpg'],
+        ['PaintedHills05.jpg','PaintedHills, OR, 2015 - 5','ol_PaintedHills_05.jpg'],
+        ['PaintedHills06.jpg','PaintedHills, OR, 2015 - 6','ol_PaintedHills_06.jpg'],
+        ['PaintedHills17.jpg','PaintedHills, OR, 2015 - 17','ol_PaintedHills_17.jpg'],
+        ['PaintedHills15.jpg','PaintedHills, OR, 2015 - 15','ol_PaintedHills_15.jpg'],
+        ['PaintedHills13.jpg','PaintedHills, OR, 2015 - 13','ol_PaintedHills_13.jpg'],
+        ['PaintedHills18.jpg','PaintedHills, OR, 2015 - 18','ol_PaintedHills_18.jpg'],
+        ['PaintedHills11.jpg','PaintedHills, OR, 2015 - 11','ol_PaintedHills_11.jpg'],
+        ['PaintedHills20.jpg','PaintedHills, OR, 2015 - 20','ol_PaintedHills_20.jpg'],
+        ['PaintedHills10.jpg','PaintedHills, OR, 2015 - 10','ol_PaintedHills_10.jpg'],
+        ['PaintedHills08.jpg','PaintedHills, OR, 2015 - 8','ol_PaintedHills_08.jpg'],
+        ['PaintedHills21.jpg','PaintedHills, OR, 2015 - 21','ol_PaintedHills_21.jpg'],
+        ['PaintedHills12.jpg','PaintedHills, OR, 2015 - 12','ol_PaintedHills_12.jpg']
       ],
       group: "Travel"
     },
