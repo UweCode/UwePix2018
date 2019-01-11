@@ -519,7 +519,9 @@ $(document).ready(function() {
     home: {
       title: "Home",
       data: [
-        ['NL35home.jpg','Click to open the &quot;Nightlight&quot; gallery','Nightlight'],
+        ['NL_35_home.jpg','Click to open the &quot;Nightlight I&quot; gallery','NightlightI'],
+        ['43_NL_home.jpg','Click to open the &quot;Nightlight II&quot; gallery','NightlightII'],
+        ['22_NL_home.jpg','Click to open the &quot;Nightlight III&quot; gallery','NightlightIII'],
         ['WinterInPdx_34.jpg','Click to open the &quot;A Winternight in NE Portland&quot; gallery','WinternightInNEPortland'],
         ['WallsPoles_04home.jpg','Click to open the &quot;Abstracts on Walls & Utility Poles&quot; gallery','WallsAndPoles'],
         ['Por102home.jpg','Click to open the &quot;Portraits I&quot; gallery','EarlyPortraits'],
@@ -587,6 +589,70 @@ $(document).ready(function() {
         ['NL64.jpg','Cambridge, MA. USA 1994'],
         ['NL09.jpg','Prague, Czech Republic'],
         ['NL33.jpg','Yugoslavia 1982']
+      ],
+      group: "Portfolios"
+    },
+    nightlighti: {
+      title: "Nightlight I",
+      data: [
+        ['01_NL.jpg','Prague, Czech Republic, 1995','ol_01_NL.jpg'],
+        ['02_NL.jpg','Krakow, Poland, 1993','ol_02_NL.jpg'],
+        ['03_NL.jpg','Fecamp, France, 1992','ol_03_NL.jpg'],
+        ['04_NL.jpg','Zilina, Slovakia 1997','ol_04_NL.jpg'],
+        ['05_NL.jpg','Krakow, Poland, 1993','ol_05_NL.jpg'],
+        ['06_NL.jpg','Zilina, Slovakia, 1997','ol_06_NL.jpg'],
+        ['07_NL.jpg','Lisieux, France, 1992','ol_07_NL.jpg'],
+        ['08_NL.jpg','Cambridge MA, USA, 1994','ol_08_NL.jpg'],
+        ['09_NL.jpg','Krakow, Poland, 1993','ol_09_NL.jpg'],
+        ['10_NL.jpg','Krakow, Poland, 1994','ol_10_NL.jpg'],
+        ['11_NL.jpg','Zilina, Slovakia 1997','ol_11_NL.jpg'],
+        ['12_NL.jpg','Thessaloniki, Greece 1982','ol_12_NL.jpg'],
+        ['13_NL.jpg','Prague, Czech Republic, 1994','ol_13_NL.jpg'],
+        ['14_NL.jpg','Krakow, Poland, 1993','ol_14_NL.jpg'],
+        ['15_NL.jpg','Krakow, Poland, 1993','ol_15_NL.jpg'],
+        ['16_NL.jpg','Prague, Czech Republic, 1994','ol_16_NL.jpg']
+      ],
+      group: "Portfolios"
+    },
+    nightlightii: {
+      title: "Nightlight II",
+      data: [
+        ['34_NL.jpg','Yugoslavia 1982','ol_34_NL.jpg'],
+        ['35_NL.jpg','Valencia, Spain 1997','ol_35_NL.jpg'],
+        ['36_NL.jpg','Prague, Czech Republic, 1995','ol_36_NL.jpg'],
+        ['37_NL.jpg','Normandie, France, 1992','ol_37_NL.jpg'],
+        ['38_NL.jpg','Saint-Gilles-Croix-de-Vie, France, 1992','ol_38_NL.jpg'],
+        ['39_NL.jpg','Prague, Czech Republic, 1994','ol_39_NL.jpg'],
+        ['40_NL.jpg','Saint-Gilles-Croix-de-Vie, France, 1992','ol_40_NL.jpg'],
+        ['41_NL.jpg','Valencia, Spain 1997','ol_41_NL.jpg'],
+        ['42_NL.jpg','Prague, Czech Republic 1996','ol_42_NL.jpg'],
+        ['43_NL.jpg','Prague, Czech Republic 1996','ol_43_NL.jpg'],
+        ['44_NL.jpg','Prague, Czech Republic 1996','ol_44_NL.jpg'],
+        ['45_NL.jpg','Prague, Czech Republic 1996','ol_45_NL.jpg'],
+        ['46_NL.jpg','Prague, Czech Republic 1995','ol_46_NL.jpg']
+      ],
+      group: "Portfolios"
+    },
+    nightlightiii: {
+      title: "Nightlight III",
+      data: [
+        ['17_NL.jpg','Prague, Czech Republic, 1994','ol_17_NL.jpg'],
+        ['18_NL.jpg','Cambridge MA, USA, 1994','ol_18_NL.jpg'],
+        ['19_NL.jpg','Belfort, France, 2000','ol_19_NL.jpg'],
+        ['20_NL.jpg','Prague, Czech Republic, 1994','ol_20_NL.jpg'],
+        ['21_NL.jpg','Cambridge MA, USA, 1994','ol_21_NL.jpg'],
+        ['22_NL.jpg','Prague, Czech Republic 1995','ol_22_NL.jpg'],
+        ['23_NL.jpg','Narbonne, France, 1991','ol_23_NL.jpg'],
+        ['24_NL.jpg','Prague, Czech Republic, 1995','ol_24_NL.jpg'],
+        ['25_NL.jpg','Cambridge MA, USA, 1994','ol_25_NL.jpg'],
+        ['26_NL.jpg','Prague, Czech Republic, 1995','ol_26_NL.jpg'],
+        ['27_NL.jpg','Zilina, Slovakia, 1997','ol_27_NL.jpg'],
+        ['28_NL.jpg','Paris, France, 1991','ol_28_NL.jpg'],
+        ['29_NL.jpg','Prague, Czech Republic, 1994','ol_29_NL.jpg'],
+        ['30_NL.jpg','Lisieux, France, 1992','ol_30_NL.jpg'],
+        ['31_NL.jpg','Prague, Czech Republic, 1995','ol_31_NL.jpg'],
+        ['32_NL.jpg','Presov, Slovakia, 1993','ol_32_NL.jpg'],
+        ['33_NL.jpg','Cambridge MA, USA, 1994','ol_33_NL.jpg']
       ],
       group: "Portfolios"
     },
