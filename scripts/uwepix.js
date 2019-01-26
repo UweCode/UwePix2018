@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 				if (menuId.length > 3) {
 					let selectedPageTitle = menuId.substring(3,e.currentTarget.id.length).replace("Footer","Home");
-          let selectedPage = $.pages[selectedPageTitle.replace(" ","").toLowerCase()];
+          let selectedPage = $.pages[selectedPageTitle.replace(/ /g, "").toLowerCase()];
 
 					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
@@ -80,7 +80,7 @@ $(document).ready(function() {
     			let selectedPageTitle = e.currentTarget.id;
 
           if(!$.isNavDrag) {
-            if (_Indx.fnResetPage($.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()], false)) {
+            if (_Indx.fnResetPage($.pages[selectedPageTitle.replace(/ /g, "").replace("n+K","nandk").toLowerCase()], false)) {
               _Indx.fnStartLoadingPage(selectedPageTitle);
     				}
           } else {
@@ -96,7 +96,7 @@ $(document).ready(function() {
 
 				if (menuId.length > 9) {
 					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
-          let selectedPage = $.pages[selectedPageTitle.replace(" ","").toLowerCase()];
+          let selectedPage = $.pages[selectedPageTitle.replace(/ /g, "").toLowerCase()];
 
 					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
@@ -309,7 +309,7 @@ $(document).ready(function() {
            _Indx.fnCloseOverlay();
         }
         $.isHistory = true;
-        let selectedPage = $.pages[$.currentPage.replace(" ","").toLowerCase()];
+        let selectedPage = $.pages[$.currentPage.replace(/ /g, "").toLowerCase()];
 				if (_Indx.fnResetPage(selectedPage, true)) {
 					if ($.currentPage === 'InfoAndContact') {
             _Indx.fnLoadInfoAndContact($.currentPage);
@@ -388,7 +388,7 @@ $(document).ready(function() {
    _Indx.fnStartLoadingPage = (selectedPageTitle) => {
      setTimeout( function () { $('#divGallery').slideDown(300); },300 );
      setTimeout( function () {
-       let selectedPage = $.pages[selectedPageTitle.replace(" ","").replace("n+K","nandk").toLowerCase()];
+       let selectedPage = $.pages[selectedPageTitle.replace(/ /g, "").replace("n+K","nandk").toLowerCase()];
        _Indx.fnLoadPage(selectedPage);
        if (!$.isHistory) {
          history.pushState(selectedPage, selectedPage.title);
@@ -523,7 +523,7 @@ $(document).ready(function() {
         ['43_NL_home.jpg','Click to open the &quot;Nightlight II&quot; gallery','NightlightII'],
         ['22_NL_home.jpg','Click to open the &quot;Nightlight III&quot; gallery','NightlightIII'],
         ['WinterInPdx_34.jpg','Click to open the &quot;A Winternight in NE Portland&quot; gallery','WinternightInNEPortland'],
-        ['WallsPoles_04home.jpg','Click to open the &quot;Abstracts on Walls & Utility Poles&quot; gallery','WallsAndPoles'],
+        ['Abstracts_04home.jpg','Click to open the &quot;Abstracts on Walls & Utility Poles&quot; gallery','Abstracts'],
         ['Por102home.jpg','Click to open the &quot;Portraits I&quot; gallery','EarlyPortraits'],
         ['Por203home.jpg','Click to open the &quot;Portraits II&quot; gallery','Portraits'],
         ['MovieDirectors09home.jpg','Click to open the &quot;Movie Directors&quot; gallery','MovieDirectors'],
@@ -630,21 +630,21 @@ $(document).ready(function() {
       ],
       group: "Portfolios"
     },
-    wallsandpoles: {
-      title: "Walls And Poles",
+    abstracts: {
+      title: "Abstracts",
       data: [
-        ['WallsPoles_01.jpg','Abstracts on Walls & Utility Poles - 1','ol_WallsPoles_01.jpg'],
-        ['WallsPoles_02.jpg','Abstracts on Walls & Utility Poles - 2','ol_WallsPoles_02.jpg'],
-        ['WallsPoles_10.jpg','Abstracts on Walls & Utility Poles - 10','ol_WallsPoles_10.jpg'],
-        ['WallsPoles_09.jpg','Abstracts on Walls & Utility Poles - 9','ol_WallsPoles_09.jpg'],
-        ['WallsPoles_03.jpg','Abstracts on Walls & Utility Poles - 3','ol_WallsPoles_03.jpg'],
-        ['WallsPoles_06.jpg','Abstracts on Walls & Utility Poles - 6','ol_WallsPoles_06.jpg'],
-        ['WallsPoles_07.jpg','Abstracts on Walls & Utility Poles - 7','ol_WallsPoles_07.jpg'],
-        ['WallsPoles_08.jpg','Abstracts on Walls & Utility Poles - 8','ol_WallsPoles_08.jpg'],
-        ['WallsPoles_04.jpg','Abstracts on Walls & Utility Poles - 4','ol_WallsPoles_04.jpg'],
-        ['WallsPoles_05.jpg','Abstracts on Walls & Utility Poles - 5','ol_WallsPoles_05.jpg'],
-        ['WallsPoles_12.jpg','Abstracts on Walls & Utility Poles - 12','ol_WallsPoles_12.jpg'],
-        ['WallsPoles_11.jpg','Abstracts on Walls & Utility Poles - 11','ol_WallsPoles_11.jpg']
+        ['Abstracts_01.jpg','Abstracts on Walls & Utility Poles - 1','ol_Abstracts_01.jpg'],
+        ['Abstracts_02.jpg','Abstracts on Walls & Utility Poles - 2','ol_Abstracts_02.jpg'],
+        ['Abstracts_10.jpg','Abstracts on Walls & Utility Poles - 10','ol_Abstracts_10.jpg'],
+        ['Abstracts_09.jpg','Abstracts on Walls & Utility Poles - 9','ol_Abstracts_09.jpg'],
+        ['Abstracts_03.jpg','Abstracts on Walls & Utility Poles - 3','ol_Abstracts_03.jpg'],
+        ['Abstracts_06.jpg','Abstracts on Walls & Utility Poles - 6','ol_Abstracts_06.jpg'],
+        ['Abstracts_07.jpg','Abstracts on Walls & Utility Poles - 7','ol_Abstracts_07.jpg'],
+        ['Abstracts_08.jpg','Abstracts on Walls & Utility Poles - 8','ol_Abstracts_08.jpg'],
+        ['Abstracts_04.jpg','Abstracts on Walls & Utility Poles - 4','ol_Abstracts_04.jpg'],
+        ['Abstracts_05.jpg','Abstracts on Walls & Utility Poles - 5','ol_Abstracts_05.jpg'],
+        ['Abstracts_12.jpg','Abstracts on Walls & Utility Poles - 12','ol_Abstracts_12.jpg'],
+        ['Abstracts_11.jpg','Abstracts on Walls & Utility Poles - 11','ol_Abstracts_11.jpg']
       ],
       group: "Portfolios"
     },
