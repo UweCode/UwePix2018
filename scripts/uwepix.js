@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 				if (menuId.length > 3) {
 					let selectedPageTitle = menuId.substring(3,e.currentTarget.id.length).replace("Footer","Home");
-          let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
+          let selectedPage = $.pages[selectedPageTitle.replace(" ","").toLowerCase()];
 
 					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
@@ -96,7 +96,7 @@ $(document).ready(function() {
 
 				if (menuId.length > 9) {
 					let selectedPageTitle = menuId.substring(9,e.currentTarget.id.length);
-          let selectedPage = $.pages[selectedPageTitle.toLowerCase()];
+          let selectedPage = $.pages[selectedPageTitle.replace(" ","").toLowerCase()];
 
 					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
@@ -309,7 +309,7 @@ $(document).ready(function() {
            _Indx.fnCloseOverlay();
         }
         $.isHistory = true;
-        let selectedPage = $.pages[$.currentPage.toLowerCase()];
+        let selectedPage = $.pages[$.currentPage.replace(" ","").toLowerCase()];
 				if (_Indx.fnResetPage(selectedPage, true)) {
 					if ($.currentPage === 'InfoAndContact') {
             _Indx.fnLoadInfoAndContact($.currentPage);
@@ -388,7 +388,7 @@ $(document).ready(function() {
    _Indx.fnStartLoadingPage = (selectedPageTitle) => {
      setTimeout( function () { $('#divGallery').slideDown(300); },300 );
      setTimeout( function () {
-       let selectedPage = $.pages[selectedPageTitle.replace("n+K","nandk").toLowerCase()];
+       let selectedPage = $.pages[selectedPageTitle.replace(" ","").replace("n+K","nandk").toLowerCase()];
        _Indx.fnLoadPage(selectedPage);
        if (!$.isHistory) {
          history.pushState(selectedPage, selectedPage.title);
@@ -541,57 +541,6 @@ $(document).ready(function() {
       data: [],
       group: ""
     },
-    nightlight: {
-      title: "Nightlight",
-      data: [
-        ['NL05.jpg','Prague, Czech Republic'],
-        ['NL16.jpg','Prague, Czech Republic'],
-        ['NL35.jpg','Fecamp, France 1992'],
-        ['NL38.jpg','Lisieux, France 1992'],
-        ['NL28.jpg','Krakow, Poland 1993'],
-        ['NL30.jpg','Krakow, Poland 1993'],
-        ['NL29.jpg','Krakow, Poland 1993'],
-        ['NL31.jpg','Krakow, Poland 1993'],
-        ['NL36.jpg','Paris, France 1991'],
-        ['NL06.jpg','Prague, Czech Republic 1994'],
-        ['NL11.jpg','Prague, Czech Republic 1994'],
-        ['NL10.jpg','Prague, Czech Republic 1994'],
-        ['NL14.jpg','Prague, Czech Republic 1994'],
-        ['NL15.jpg','Prague, Czech Republic'],
-        ['NL08.jpg','Prague, Czech Republic'],
-        ['NL18.jpg','Prague, Czech Republic'],
-        ['NL19.jpg','Prague, Czech Republic'],
-        ['NL27.jpg','Krakow, Poland'],
-        ['NL17.jpg','Prague, Czech Republic'],
-        ['NL13.jpg','Prague, Czech Republic'],
-        ['NL20.jpg','Zilina, Slovakia 1997'],
-        ['NL26.jpg','Zilina, Slovakia 1997'],
-        ['NL21.jpg','Zilina, Slovakia 1997'],
-        ['NL23.jpg','Zilina, Slovakia 1997'],
-        ['NL41.jpg','Normandie, France 1992'],
-        ['NL62.jpg','Cambridge, MA. USA 1994'],
-        ['NL56.jpg','Mannheim, Germany 1992'],
-        ['NL55.jpg','Mannheim, Germany 1992'],
-        ['NL46.jpg','Valencia, Spain 1997'],
-        ['NL43.jpg','France 1992'],
-        ['NL49.jpg','Greece 1982'],
-        ['NL45.jpg','Valencia, Spain 1997'],
-        ['NL04.jpg','Prague, Czech Republic'],
-        ['NL07.jpg','Prague, Czech Republic'],
-        ['NL59.jpg','Lake Constans, Germany 1985'],
-        ['NL42.jpg','France 1992'],
-        ['NL40.jpg','Narbonne, France 1991'],
-        ['NL12.jpg','Prague, Czech Republic'],
-        ['NL39.jpg','Lisieux, France 1992'],
-        ['NL63.jpg','Cambridge, MA. USA 1994'],
-        ['NL65.jpg','Cambridge, MA. USA 1994'],
-        ['NL37.jpg','France'],
-        ['NL64.jpg','Cambridge, MA. USA 1994'],
-        ['NL09.jpg','Prague, Czech Republic'],
-        ['NL33.jpg','Yugoslavia 1982']
-      ],
-      group: "Portfolios"
-    },
     nightlighti: {
       title: "Nightlight I",
       data: [
@@ -605,7 +554,7 @@ $(document).ready(function() {
         ['08_NL.jpg','Cambridge MA, USA, 1994','ol_08_NL.jpg'],
         ['09_NL.jpg','Krakow, Poland, 1993','ol_09_NL.jpg'],
         ['10_NL.jpg','Krakow, Poland, 1994','ol_10_NL.jpg'],
-        ['11_NL.jpg','Zilina, Slovakia 1997','ol_11_NL.jpg'],
+        ['11_NL.jpg','Zilina, Slovakia, 1997','ol_11_NL.jpg'],
         ['12_NL.jpg','Thessaloniki, Greece 1982','ol_12_NL.jpg'],
         ['13_NL.jpg','Prague, Czech Republic, 1994','ol_13_NL.jpg'],
         ['14_NL.jpg','Krakow, Poland, 1993','ol_14_NL.jpg'],
@@ -617,8 +566,8 @@ $(document).ready(function() {
     nightlightii: {
       title: "Nightlight II",
       data: [
-        ['34_NL.jpg','Yugoslavia 1982','ol_34_NL.jpg'],
-        ['35_NL.jpg','Valencia, Spain 1997','ol_35_NL.jpg'],
+        ['34_NL.jpg','Yugoslavia, 1982','ol_34_NL.jpg'],
+        ['35_NL.jpg','Valencia, Spain, 1997','ol_35_NL.jpg'],
         ['36_NL.jpg','Prague, Czech Republic, 1995','ol_36_NL.jpg'],
         ['37_NL.jpg','Normandie, France, 1992','ol_37_NL.jpg'],
         ['38_NL.jpg','Saint-Gilles-Croix-de-Vie, France, 1992','ol_38_NL.jpg'],
@@ -641,7 +590,7 @@ $(document).ready(function() {
         ['19_NL.jpg','Belfort, France, 2000','ol_19_NL.jpg'],
         ['20_NL.jpg','Prague, Czech Republic, 1994','ol_20_NL.jpg'],
         ['21_NL.jpg','Cambridge MA, USA, 1994','ol_21_NL.jpg'],
-        ['22_NL.jpg','Prague, Czech Republic 1995','ol_22_NL.jpg'],
+        ['22_NL.jpg','Prague, Czech Republic, 1995','ol_22_NL.jpg'],
         ['23_NL.jpg','Narbonne, France, 1991','ol_23_NL.jpg'],
         ['24_NL.jpg','Prague, Czech Republic, 1995','ol_24_NL.jpg'],
         ['25_NL.jpg','Cambridge MA, USA, 1994','ol_25_NL.jpg'],
@@ -702,17 +651,17 @@ $(document).ready(function() {
     earlyportraits: {
       title: "Early Portraits",
       data: [
-        ['Por112.jpg','Steffen Butz, Cartoonist & Illustrator 1993'],
-        ['Por101.jpg','Jacek, Munich 1985'],
-        ['Por102.jpg','Jan Biczycki, Actor & Acting Teacher, Munich 1985'],
+        ['Por112.jpg','Steffen Butz, Cartoonist & Illustrator, 1993'],
+        ['Por101.jpg','Jacek, Munich, 1985'],
+        ['Por102.jpg','Jan Biczycki, Actor & Acting Teacher, Munich, 1985'],
         ['Por103.jpg','Joerg, 1994'],
         ['Por104.jpg','Steffen Butz, Cartoonist & Illustrator, 1993'],
         ['Por105.jpg','Steffen Butz, Cartoonist & Illustrator, 1993'],
         ['Por106.jpg','Steffen Butz, Cartoonist & Illustrator, 1993'],
-        ['Por108.jpg','Band 1995'],
-        ['Por107.jpg','Band 1994'],
-        ['Por110.jpg','Eva, Munich 1986'],
-        ['Por109.jpg','Band 1995'],
+        ['Por108.jpg','Band, 1995'],
+        ['Por107.jpg','Band, 1994'],
+        ['Por110.jpg','Eva, Munich, 1986'],
+        ['Por109.jpg','Band, 1995'],
         ['Por111.jpg','Daniel, 1992']
       ],
       group: "People"
