@@ -16,15 +16,13 @@ $(document).ready(function() {
 
 	// START-UP //
 
-  let url = window.location.href;
-
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
     _Indx.fnRegisterNavGallery();
 
     $.isLargeScreen = _Indx.fnIsLargeScreen();
 
-    let page = _Indx.fnGetStartUpPage(url);
+    let page = _Indx.fnGetPage(window.location.href);
     $.currentPage = page.title;
 		_Indx.fnLoadPage(page);
 
@@ -156,26 +154,21 @@ $(document).ready(function() {
     window.addEventListener('popstate', function(event) {
       let page = event.state;
       if(page){
-        $.isHistory = true;
-
-        if($('#overlay').is(':visible')) {
-          _Indx.fnCloseOverlay();
-        }
-
-				if (_Indx.fnResetPage(page, false)) {
-					if (page.title.replace(/ /g, "") === 'InfoAndContact') {
-			    	$('#cmdInfoAndContact').addClass('liMenuSel');
-            document.title = "Info + Contact";
-						setTimeout( () => {
-              $('#divInfoAndContact').slideDown(300);
-            },300 );
-					} else if (page.title === 'Home' || page.title === 'Footer') {
-            _Indx.fnLoadHomePage();
-					} else {
-            _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
-					}
-				}
+        _Indx.fnSetUpNewPage(page);
       }
+    });
+
+    // check for Enter click to see if the user changed the URL manually
+    $(document).on('keypress',function(e) {
+        if(e.which == 13) {
+          let page = _Indx.fnGetPage(window.location.href);
+          if ($.currentPage != page.title) {
+            $.currentPage = page.title
+          }
+          if(page){
+            _Indx.fnSetUpNewPage(page);
+          }
+        }
     });
 
     // overlay EVENTS
@@ -323,7 +316,6 @@ $(document).ready(function() {
     }
 
     _Indx.fnCloseOverlay = () => {
-     _Indx.fnLoadPage(page);
      $('#overlay').fadeOut(500);
      setTimeout( () => {
        $('#overlayContent').empty();
@@ -335,7 +327,7 @@ $(document).ready(function() {
      $.isNavDrag = true;
    }
 
-   _Indx.fnGetStartUpPage = (url) => {
+   _Indx.fnGetPage = (url) => {
      let urlParts = url.split('#');
      let page = $.pages.home;
 
@@ -356,6 +348,28 @@ $(document).ready(function() {
        $('.menuUpIcon').trigger('click');
      }
    };
+
+   _Indx.fnSetUpNewPage = (page) => {
+     $.isHistory = true;
+
+     if($('#overlay').is(':visible')) {
+       _Indx.fnCloseOverlay();
+     }
+
+		 if (_Indx.fnResetPage(page, false)) {
+       if (page.title.replace(/ /g, "") === 'InfoAndContact') {
+      	 $('#cmdInfoAndContact').addClass('liMenuSel');
+         document.title = "Info + Contact";
+      	 setTimeout( () => {
+           $('#divInfoAndContact').slideDown(300);
+         },300 );
+       } else if (page.title === 'Home' || page.title === 'Footer') {
+         _Indx.fnLoadHomePage();
+       } else {
+         _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
+       }
+     }
+   }
 
 	 // prepare page to load new content
 	 _Indx.fnResetPage = (page, forceReset) => {
@@ -434,6 +448,11 @@ $(document).ready(function() {
 
     _Indx.fnLoadHomePage = () => {
       $('#cmdHome').addClass('liMenuSel');
+
+      if($('#overlay').is(':visible')) {
+        _Indx.fnCloseOverlay();
+      }
+
       setTimeout( () => {
         document.title = "Home";
         $('#divNavGallery').children().slideDown(300);
@@ -447,6 +466,11 @@ $(document).ready(function() {
 
     _Indx.fnLoadInfoAndContact = (page) => {
       $('#cmdInfoAndContact').addClass('liMenuSel');
+
+      if($('#overlay').is(':visible')) {
+        _Indx.fnCloseOverlay();
+      }
+
       setTimeout( () => {
         document.title = "Info + Contact";
         $('#divInfoAndContact').slideDown(300);
