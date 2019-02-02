@@ -16,13 +16,15 @@ $(document).ready(function() {
 
 	// START-UP //
 
+  let url = window.location.href;
+
 	setTimeout( () => { 							      // start-up: go to Home page
 		_Indx.fnRegisterMenuEvents();
     _Indx.fnRegisterNavGallery();
 
     $.isLargeScreen = _Indx.fnIsLargeScreen();
 
-    let page = _Indx.fnGetPage(window.location.href);
+    let page = _Indx.fnGetStartUpPage(url);
     $.currentPage = page.title;
 		_Indx.fnLoadPage(page);
 
@@ -154,21 +156,26 @@ $(document).ready(function() {
     window.addEventListener('popstate', function(event) {
       let page = event.state;
       if(page){
-        _Indx.fnSetUpNewPage(page);
-      }
-    });
+        $.isHistory = true;
 
-    // check for Enter click to see if the user changed the URL manually
-    $(document).on('keypress',function(e) {
-        if(e.which == 13) {
-          let page = _Indx.fnGetPage(window.location.href);
-          if ($.currentPage != page.title) {
-            $.currentPage = page.title
-          }
-          if(page){
-            _Indx.fnSetUpNewPage(page);
-          }
+        if($('#overlay').is(':visible')) {
+          _Indx.fnCloseOverlay();
         }
+
+				if (_Indx.fnResetPage(page, false)) {
+					if (page.title.replace(/ /g, "") === 'InfoAndContact') {
+			    	$('#cmdInfoAndContact').addClass('liMenuSel');
+            document.title = "Info + Contact";
+						setTimeout( () => {
+              $('#divInfoAndContact').slideDown(300);
+            },300 );
+					} else if (page.title === 'Home' || page.title === 'Footer') {
+            _Indx.fnLoadHomePage();
+					} else {
+            _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
+					}
+				}
+      }
     });
 
     // overlay EVENTS
@@ -316,6 +323,7 @@ $(document).ready(function() {
     }
 
     _Indx.fnCloseOverlay = () => {
+     _Indx.fnLoadPage(page);
      $('#overlay').fadeOut(500);
      setTimeout( () => {
        $('#overlayContent').empty();
@@ -327,7 +335,7 @@ $(document).ready(function() {
      $.isNavDrag = true;
    }
 
-   _Indx.fnGetPage = (url) => {
+   _Indx.fnGetStartUpPage = (url) => {
      let urlParts = url.split('#');
      let page = $.pages.home;
 
@@ -348,28 +356,6 @@ $(document).ready(function() {
        $('.menuUpIcon').trigger('click');
      }
    };
-
-   _Indx.fnSetUpNewPage = (page) => {
-     $.isHistory = true;
-
-     if($('#overlay').is(':visible')) {
-       _Indx.fnCloseOverlay();
-     }
-
-		 if (_Indx.fnResetPage(page, false)) {
-       if (page.title.replace(/ /g, "") === 'InfoAndContact') {
-      	 $('#cmdInfoAndContact').addClass('liMenuSel');
-         document.title = "Info + Contact";
-      	 setTimeout( () => {
-           $('#divInfoAndContact').slideDown(300);
-         },300 );
-       } else if (page.title === 'Home' || page.title === 'Footer') {
-         _Indx.fnLoadHomePage();
-       } else {
-         _Indx.fnStartLoadingPage(page.title.replace(/ /g, ""));
-       }
-     }
-   }
 
 	 // prepare page to load new content
 	 _Indx.fnResetPage = (page, forceReset) => {
@@ -448,11 +434,6 @@ $(document).ready(function() {
 
     _Indx.fnLoadHomePage = () => {
       $('#cmdHome').addClass('liMenuSel');
-
-      if($('#overlay').is(':visible')) {
-        _Indx.fnCloseOverlay();
-      }
-
       setTimeout( () => {
         document.title = "Home";
         $('#divNavGallery').children().slideDown(300);
@@ -466,11 +447,6 @@ $(document).ready(function() {
 
     _Indx.fnLoadInfoAndContact = (page) => {
       $('#cmdInfoAndContact').addClass('liMenuSel');
-
-      if($('#overlay').is(':visible')) {
-        _Indx.fnCloseOverlay();
-      }
-
       setTimeout( () => {
         document.title = "Info + Contact";
         $('#divInfoAndContact').slideDown(300);
@@ -556,7 +532,7 @@ $(document).ready(function() {
         ['WiedenKennedy06home.jpg','Click to open the &quot;Wieden+Kennedy Building&quot; gallery','Wieden+Kennedy'],
         ['PaintedHills02home.jpg','Click to open the &quot;Painted Hills&quot; gallery','PaintedHills'],
         ['Berlin03home.jpg','Click to open the &quot;Berlin&quot; gallery','Berlin'],
-        ['BerlinWallArt01home.jpg','Click to open the &quot;Berlin Wall Art&quot; gallery','BerlinWallArt']
+        ['WallArtBerlin01home.jpg','Click to open the &quot;Berlin Wall Art&quot; gallery','WallArtBerlin']
       ],
       group: ""
     },
@@ -841,31 +817,31 @@ $(document).ready(function() {
       ],
       group: "Travel"
     },
-    berlinwallart: {
-      title: "Berlin Wall Art",
+    wallartberlin: {
+      title: "Wall Art Berlin",
       data: [
-        ['BerlinWallArt01.jpg','Berlin Hackersche Hoefe: Wall-Art 2014 - 01'],
-        ['BerlinWallArt11.jpg','Berlin Kreuzberg: Wall-Art 2014 - 11'],
-        ['BerlinWallArt10.jpg','Berlin Kreuzberg: Wall-Art 2014 - 10'],
-        ['BerlinWallArt13.jpg','Berlin Kreuzberg: Wall-Art 2014 - 13'],
-        ['BerlinWallArt14.jpg','Berlin Kreuzberg: Posters 2014 - 14'],
-        ['BerlinWallArt15.jpg','Berlin Kreuzberg: Posters 2014 - 15'],
-        ['BerlinWallArt16.jpg','Berlin Kreuzberg: Posters 2014 - 16'],
-        ['BerlinWallArt09.jpg','Berlin Kreuzberg: Posters 2014 - 09'],
-        ['BerlinWallArt02.jpg','Berlin: Wall-Art 2014 - 02'],
-        ['BerlinWallArt03.jpg','Berlin: Wall-Art 2014 - 03'],
-        ['BerlinWallArt05.jpg','Berlin: Wall-Art 2014 - 05'],
-        ['BerlinWallArt08.jpg','Berlin: Wall-Art 2014 - 08'],
-        ['BerlinWallArt26.jpg','Berlin: East Side Gallery 2014 - 26'],
-        ['BerlinWallArt24.jpg','Berlin: East Side Gallery 2014 - 24'],
-        ['BerlinWallArt23.jpg','Berlin: East Side Gallery 2014 - 23'],
-        ['BerlinWallArt18.jpg','Berlin: East Side Gallery 2014 - 18'],
-        ['BerlinWallArt17.jpg','Berlin: East Side Gallery 2014 - 17'],
-        ['BerlinWallArt21.jpg','Berlin: East Side Gallery 2014 - 21'],
-        ['BerlinWallArt19.jpg','Berlin: East Side Gallery 2014 - 19'],
-        ['BerlinWallArt20.jpg','Berlin: East Side Gallery 2014 - 20'],
-        ['BerlinWallArt22.jpg','Berlin: East Side Gallery 2014 - 22'],
-        ['BerlinWallArt25.jpg','Berlin: East Side Gallery 2014 - 25']
+        ['WallArtBerlin01.jpg','Berlin Hackersche Hoefe: Wall-Art 2014 - 01'],
+        ['WallArtBerlin11.jpg','Berlin Kreuzberg: Wall-Art 2014 - 11'],
+        ['WallArtBerlin10.jpg','Berlin Kreuzberg: Wall-Art 2014 - 10'],
+        ['WallArtBerlin13.jpg','Berlin Kreuzberg: Wall-Art 2014 - 13'],
+        ['WallArtBerlin14.jpg','Berlin Kreuzberg: Posters 2014 - 14'],
+        ['WallArtBerlin15.jpg','Berlin Kreuzberg: Posters 2014 - 15'],
+        ['WallArtBerlin16.jpg','Berlin Kreuzberg: Posters 2014 - 16'],
+        ['WallArtBerlin09.jpg','Berlin Kreuzberg: Posters 2014 - 09'],
+        ['WallArtBerlin02.jpg','Berlin: Wall-Art 2014 - 02'],
+        ['WallArtBerlin03.jpg','Berlin: Wall-Art 2014 - 03'],
+        ['WallArtBerlin05.jpg','Berlin: Wall-Art 2014 - 05'],
+        ['WallArtBerlin08.jpg','Berlin: Wall-Art 2014 - 08'],
+        ['WallArtBerlin26.jpg','Berlin Wall: East Side Gallery 2014 - 26'],
+        ['WallArtBerlin24.jpg','Berlin Wall: East Side Gallery 2014 - 24'],
+        ['WallArtBerlin23.jpg','Berlin Wall: East Side Gallery 2014 - 23'],
+        ['WallArtBerlin18.jpg','Berlin Wall: East Side Gallery 2014 - 18'],
+        ['WallArtBerlin17.jpg','Berlin Wall: East Side Gallery 2014 - 17'],
+        ['WallArtBerlin21.jpg','Berlin Wall: East Side Gallery 2014 - 21'],
+        ['WallArtBerlin19.jpg','Berlin Wall: East Side Gallery 2014 - 19'],
+        ['WallArtBerlin20.jpg','Berlin Wall: East Side Gallery 2014 - 20'],
+        ['WallArtBerlin22.jpg','Berlin Wall: East Side Gallery 2014 - 22'],
+        ['WallArtBerlin25.jpg','Berlin Wall: East Side Gallery 2014 - 25']
       ],
       group: "Travel"
     }
