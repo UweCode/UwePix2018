@@ -336,11 +336,12 @@ $(document).ready(function() {
    }
 
    _Indx.fnGetStartUpPage = (url) => {
-     let urlParts = url.split('#');
+     let urlParts = url.split('?');
      let page = $.pages.home;
 
      if (urlParts.length === 2) {
        page = $.pages[urlParts[1].toLowerCase()];
+       history.pushState(page, page.title);
      }
      // Update this history event so that the state object contains the data
      // for the homepage.
@@ -532,7 +533,8 @@ $(document).ready(function() {
         ['WiedenKennedy06home.jpg','Click to open the &quot;Wieden+Kennedy Building&quot; gallery','Wieden+Kennedy'],
         ['PaintedHills02home.jpg','Click to open the &quot;Painted Hills&quot; gallery','PaintedHills'],
         ['Berlin03home.jpg','Click to open the &quot;Berlin&quot; gallery','Berlin'],
-        ['WallArtBerlin01home.jpg','Click to open the &quot;Berlin Wall Art&quot; gallery','WallArtBerlin']
+        ['Francehome.jpg','Click to open the &quot;France&quot; gallery','France'],
+        ['WallArtBerlin01home.jpg','Click to open the &quot;Wall Art, Berlin&quot; gallery','WallArtBerlin']
       ],
       group: ""
     },
@@ -619,7 +621,7 @@ $(document).ready(function() {
         ['WinterInPdx_34.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_34.jpg'],
         ['WinterInPdx_07.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_07.jpg'],
         ['WinterInPdx_12.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_12.jpg'],
-        ['WinterInPdx_15.jpg','A Winternight in NE Portland, Dec. 28th, 2008',,'ol_WinterInPdx_15.jpg'],
+        ['WinterInPdx_15.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_15.jpg'],
         ['WinterInPdx_16.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_16.jpg'],
         ['WinterInPdx_32.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_32.jpg'],
         ['WinterInPdx_17.jpg','A Winternight in NE Portland, Dec. 28th, 2008','ol_WinterInPdx_17.jpg'],
@@ -787,33 +789,87 @@ $(document).ready(function() {
       ],
       group: "Travel"
     },
-    berlin: {
-      title: "Berlin",
+    francei: {
+      title: "France I",
       data: [
-        ['Berlin03.jpg','Berlin Brandenburg Gate 2014 - 03'],
-        ['Berlin01.jpg','Berlin Mitte: Unter Den Linden 2014 - 01'],
-        ['Berlin02.jpg','Berlin Mitte: Unter Den Linden 2014 - 02'],
-        ['Berlin07.jpg','Berlin, Cathedral Church 2014 - 07'],
-        ['Berlin06.jpg','Berlin Kreuzberg 2014 - 06'],
-        ['Berlin04.jpg','Berlin Kreuzberg 2014 - 04'],
-        ['Berlin09.jpg','Berlin 09'],
-        ['Berlin05.jpg','Berlin Kreuzberg 2014 - 05'],
-        ['Berlin10.jpg','Berlin 10'],
-        ['Berlin20.jpg','Berlin 20'],
-        ['Berlin23.jpg','Berlin 23'],
-        ['Berlin24.jpg','Berlin 24'],
-        ['Berlin22.jpg','Berlin 22'],
-        ['Berlin21.jpg','Berlin 21'],
-        ['Berlin08.jpg','Berlin 08'],
-        ['Berlin11.jpg','Berlin: Holocaust Memorial 2014 - 11'],
-        ['Berlin12.jpg','Berlin: Holocaust Memorial 2014 - 12'],
-        ['Berlin13.jpg','Berlin: Holocaust Memorial 2014 - 13'],
-        ['Berlin14.jpg','Berlin: Wall Memorial 2014 - 14'],
-        ['Berlin15.jpg','Berlin: Wall Memorial 2014 - 15'],
-        ['Berlin16.jpg','Berlin: Wall Memorial 2014 - 16'],
-        ['Berlin17.jpg','Berlin: Wall Memorial 2014 - 17'],
-        ['Berlin18.jpg','Berlin: Wall Memorial 2014 - 18'],
-        ['Berlin19.jpg','Berlin: Wall Memorial 2014 - 19']
+        ['France_101.jpg','...............','ol_France_101.jpg'],
+        ['France_102.jpg','...............','ol_France_102.jpg'],
+        ['France_103.jpg','...............','ol_France_103.jpg'],
+        ['France_104.jpg','...............','ol_France_104.jpg'],
+        ['France_105.jpg','...............','ol_France_105.jpg'],
+        ['France_106.jpg','...............','ol_France_106.jpg'],
+        ['France_107.jpg','...............','ol_France_107.jpg'],
+        ['France_108.jpg','...............','ol_France_108.jpg'],
+        ['France_109.jpg','...............','ol_France_109.jpg'],
+        ['France_110.jpg','...............','ol_France_110.jpg'],
+        ['France_111.jpg','...............','ol_France_111.jpg'],
+        ['France_112.jpg','...............','ol_France_112.jpg'],
+        ['France_113.jpg','...............','ol_France_113.jpg'],
+        ['France_114.jpg','...............','ol_France_114.jpg'],
+        ['France_115.jpg','...............','ol_France_115.jpg']
+      ],
+      group: "Travel"
+    },
+    franceii: {
+      title: "France II",
+      data: [
+        ['France_201.jpg','...............','ol_France_201.jpg'],
+        ['France_202.jpg','...............','ol_France_202.jpg'],
+        ['France_203.jpg','...............','ol_France_203.jpg'],
+        ['France_204.jpg','...............','ol_France_204.jpg'],
+        ['France_205.jpg','...............','ol_France_205.jpg'],
+        ['France_206.jpg','...............','ol_France_206.jpg'],
+        ['France_207.jpg','...............','ol_France_207.jpg'],
+        ['France_208.jpg','...............','ol_France_208.jpg'],
+        ['France_209.jpg','...............','ol_France_209.jpg'],
+        ['France_210.jpg','...............','ol_France_210.jpg'],
+        ['France_211.jpg','...............','ol_France_211.jpg'],
+        ['France_212.jpg','...............','ol_France_212.jpg'],
+        ['France_213.jpg','...............','ol_France_213.jpg'],
+        ['France_214.jpg','...............','ol_France_214.jpg'],
+        ['France_215.jpg','...............','ol_France_215.jpg'],
+        ['France_216.jpg','...............','ol_France_216.jpg']
+      ],
+      group: "Travel"
+    },
+    franceiii: {
+      title: "France III",
+      data: [
+        ['France_301.jpg','...............','ol_France_301.jpg'],
+        ['France_302.jpg','...............','ol_France_302.jpg'],
+        ['France_303.jpg','...............','ol_France_303.jpg'],
+        ['France_304.jpg','...............','ol_France_304.jpg'],
+        ['France_305.jpg','...............','ol_France_305.jpg'],
+        ['France_306.jpg','...............','ol_France_306.jpg'],
+        ['France_307.jpg','...............','ol_France_307.jpg'],
+        ['France_308.jpg','...............','ol_France_308.jpg'],
+        ['France_309.jpg','...............','ol_France_309.jpg'],
+        ['France_310.jpg','...............','ol_France_310.jpg'],
+        ['France_311.jpg','...............','ol_France_311.jpg'],
+        ['France_312.jpg','...............','ol_France_312.jpg'],
+        ['France_313.jpg','...............','ol_France_313.jpg'],
+        ['France_314.jpg','...............','ol_France_314.jpg'],
+        ['France_315.jpg','...............','ol_France_315.jpg']
+      ],
+      group: "Travel"
+    },
+    franceiv: {
+      title: "France IV",
+      data: [
+        ['France_401.jpg','...............','ol_France_401.jpg'],
+        ['France_402.jpg','...............','ol_France_402.jpg'],
+        ['France_403.jpg','...............','ol_France_403.jpg'],
+        ['France_404.jpg','...............','ol_France_404.jpg'],
+        ['France_405.jpg','...............','ol_France_405.jpg'],
+        ['France_406.jpg','...............','ol_France_406.jpg'],
+        ['France_407.jpg','...............','ol_France_407.jpg'],
+        ['France_408.jpg','...............','ol_France_408.jpg'],
+        ['France_409.jpg','...............','ol_France_409.jpg'],
+        ['France_410.jpg','...............','ol_France_410.jpg'],
+        ['France_411.jpg','...............','ol_France_411.jpg'],
+        ['France_412.jpg','...............','ol_France_412.jpg'],
+        ['France_413.jpg','...............','ol_France_413.jpg'],
+        ['France_414.jpg','...............','ol_France_414.jpg']
       ],
       group: "Travel"
     },
