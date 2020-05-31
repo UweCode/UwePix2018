@@ -50,7 +50,7 @@ $(document).ready(function() {
 
 					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
-              _Indx.fnLoadInfoAndContact(selectedPage);
+              _Indx.fnLoadInfoAndContact($.pages['infoandcontact']);
   					} else if (selectedPageTitle === 'Home' || selectedPageTitle === 'Footer') {
               _Indx.fnLoadHomePage();
   					} else {
@@ -61,12 +61,14 @@ $(document).ready(function() {
 			});
 
       $('#divNewsContainer').on('click', function (e) {
-        $.currentPage = "News";
-        page.title = "News";
-
-          if (_Indx.fnResetPage($.currentPage, false)) {
-            _Indx.fnLoadNews($.currentPage);
-          }
+        if (!($.currentPage === 'News'))
+        {
+          let page = $.pages['news'];
+  
+            if (_Indx.fnResetPage(page, false)) {
+              _Indx.fnLoadNews(page);
+            }
+        }
       });
 
       _Indx.fnRegisterNavGallery = () => {
@@ -109,7 +111,7 @@ $(document).ready(function() {
 
 					if (_Indx.fnResetPage(selectedPage, false)) {
   					if (selectedPageTitle === 'InfoAndContact') {
-              _Indx.fnLoadInfoAndContact();
+              _Indx.fnLoadInfoAndContact($.pages['infoandcontact']);
   					} else if (selectedPageTitle === 'Home') {
               _Indx.fnLoadHomePage();
   					} else {
@@ -329,9 +331,9 @@ $(document).ready(function() {
         let selectedPage = $.pages[$.currentPage.replace(/ /g, "").toLowerCase()];
 				if (_Indx.fnResetPage(selectedPage, true)) {
 					if ($.currentPage === 'InfoAndContact') {
-            _Indx.fnLoadInfoAndContact($.currentPage);
+            _Indx.fnLoadInfoAndContact($.pages['infoandcontact']);
 					} else if ($.currentPage === 'News') {
-            _Indx.fnLoadNews($.currentPage);
+            _Indx.fnLoadNews($.pages['news']);
 					} else if ($.currentPage === 'Home' || $.currentPage === 'Footer') {
             _Indx.fnLoadHomePage();
 					} else {
@@ -480,12 +482,12 @@ $(document).ready(function() {
       },300 );
     };
 
-    _Indx.fnLoadNews = () => {
+    _Indx.fnLoadNews = (page) => {
       setTimeout( () => {
         document.title = "News";
         $('#divNewsPageContainer').slideDown(300);
         if (!$.isHistory) {
-          history.pushState("News", page.title);
+          history.pushState(page, page.title);
         }
         $.isHistory = false;
       },300 );
