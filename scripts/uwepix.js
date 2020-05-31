@@ -60,6 +60,15 @@ $(document).ready(function() {
         }
 			});
 
+      $('#divNewsContainer').on('click', function (e) {
+        $.currentPage = "News";
+        page.title = "News";
+
+          if (_Indx.fnResetPage($.currentPage, false)) {
+            _Indx.fnLoadNews($.currentPage);
+          }
+      });
+
       _Indx.fnRegisterNavGallery = () => {
         $('#divNavGallery').prepend(_Indx.fnGetNavCarousel());
         _Indx.fnInitNavCarousel();
@@ -128,6 +137,9 @@ $(document).ready(function() {
            if ($('#divInfoAndContact').is(':visible')) {
              $('#divInfoAndContact').slideUp(300);
            }
+           if ($('#divNewsPageContainer').is(':visible')) {
+             $('#divNewsPageContainer').slideUp(300);
+           }
            if($('#divNavGallery').is(':visible')){
              $('#divNavGallery').children().slideUp(300);
            }
@@ -168,6 +180,11 @@ $(document).ready(function() {
             document.title = "Info + Contact";
 						setTimeout( () => {
               $('#divInfoAndContact').slideDown(300);
+            },300 );
+					} else if (page.title.replace(/ /g, "") === 'News') {
+            document.title = "News";
+						setTimeout( () => {
+              $('#divNewsPageContainer').slideDown(300);
             },300 );
 					} else if (page.title === 'Home' || page.title === 'Footer') {
             _Indx.fnLoadHomePage();
@@ -313,6 +330,8 @@ $(document).ready(function() {
 				if (_Indx.fnResetPage(selectedPage, true)) {
 					if ($.currentPage === 'InfoAndContact') {
             _Indx.fnLoadInfoAndContact($.currentPage);
+					} else if ($.currentPage === 'News') {
+            _Indx.fnLoadNews($.currentPage);
 					} else if ($.currentPage === 'Home' || $.currentPage === 'Footer') {
             _Indx.fnLoadHomePage();
 					} else {
@@ -361,11 +380,14 @@ $(document).ready(function() {
 	 // prepare page to load new content
 	 _Indx.fnResetPage = (page, forceReset) => {
 		 if(!forceReset && page.title === $.currentPage) {
-			 return false; // current selection is already loaded: don't do anything
+			 return false; // current selection is already loaded: don't do anything  
 		 }
 
      if ($('#divInfoAndContact').is(':visible')) {
        $('#divInfoAndContact').slideUp(300);
+     }
+     if ($('#divNewsPageContainer').is(':visible')) {
+       $('#divNewsPageContainer').slideUp(300);
      }
      if($('#divNavGallery').is(':visible')){
        $('#divNavGallery').children().slideUp(300);
@@ -458,6 +480,17 @@ $(document).ready(function() {
       },300 );
     };
 
+    _Indx.fnLoadNews = () => {
+      setTimeout( () => {
+        document.title = "News";
+        $('#divNewsPageContainer').slideDown(300);
+        if (!$.isHistory) {
+          history.pushState("News", page.title);
+        }
+        $.isHistory = false;
+      },300 );
+    };
+
 	  // get the nav carousel for the home page ; add events
 		_Indx.fnGetNavCarousel = () => {
       $.galleryHasLargeImages = false;
@@ -542,6 +575,11 @@ $(document).ready(function() {
     },
     infoandcontact: {
       title: "Info And Contact",
+      data: [],
+      group: ""
+    },
+    news: {
+      title: "News",
       data: [],
       group: ""
     },
