@@ -238,12 +238,12 @@ h4 {
     text-align: center;
     padding: 12px 16px;
     text-decoration: none;
-		text-transform: capitalize;
+	text-transform: capitalize;
 
-		-webkit-transition: color 300ms linear, background 300ms linear;
-		-moz-transition: color 300ms linear, background 300ms linear;
-		-o-transition: color 300ms linear, background 300ms linear;
-		transition: color 300ms linear, background 300ms linear;
+	-webkit-transition: color 300ms linear, background 300ms linear;
+	-moz-transition: color 300ms linear, background 300ms linear;
+	-o-transition: color 300ms linear, background 300ms linear;
+	transition: color 300ms linear, background 300ms linear;
 }
 .dropdown {
     float: left;
@@ -253,12 +253,12 @@ h4 {
     font-size: 14px;
     border: none;
     outline: none;
-		color: #616161;
+	color: #616161;
     padding: 8px 16px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
-		text-transform: uppercase;
+	text-transform: uppercase;
 }
 .navbar a:hover, .dropdown:hover .dropbtn {
     background-color: #006689;
@@ -322,7 +322,7 @@ section {
 	margin: 15px 0;
 	text-transform: none;
 }
-#pContactHeader {
+.pContactHeader {
 	color: #555;
 	font-size: 14px;
 	font-style: normal;
@@ -331,8 +331,55 @@ section {
 	line-height: 1.5em;
 	text-transform: none;
 }
-#divContact {
+.divContact {
 	margin: 20px 0 50px;
+}
+
+#divNewsPageContainer {
+	display: none;
+	margin-top: 30px;
+}
+#divNewsInfo {
+	padding: 20px;
+}
+#divNewsContainer {
+	display: block;
+	width: 260px;
+}
+#divNewsContainer:hover {
+	cursor: pointer;
+}
+#divNews {
+	background-color: maroon;
+	border-radius: 4px;
+	color: #FFF;
+	font-weight: 600;
+	padding: 10px;
+}
+#divNews:hover {
+	cursor: pointer;
+	background-color: #A02020;
+}
+#NewsShowHeader {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+#NewsShowDates {
+	font-size: 14px;
+    margin-bottom: 16px;
+}
+#imgPushdot {
+	border: 1px solid #555;
+	border-radius: 4px;
+    margin: 16px 0 25px 0;
+}
+#imgPushdot:hover {
+    background-color:#eee;
+    border: 1px solid rgb(199, 16, 16);
+}
+#imgUweAtPushdot {
+    margin: 12px 0 15px 0;
 }
 
 /* Content | Galleries */
