@@ -343,8 +343,12 @@ section {
 	padding: 20px;
 }
 #divNewsContainer {
-	display: block;
-	width: 260px;
+	box-shadow: 25px 10px 5px #999;
+    display: block;
+    width: 260px;
+    position: relative;
+    top: -12px;
+    left: 12px;
 }
 #divNewsContainer:hover {
 	cursor: pointer;
